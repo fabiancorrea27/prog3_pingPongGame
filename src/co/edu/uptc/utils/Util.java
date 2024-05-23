@@ -2,7 +2,7 @@ package co.edu.uptc.utils;
 
 public class Util {
     
-    public static void sleed(int miliseconds){
+    public static void sleep(int miliseconds){
         try {
             Thread.sleep(miliseconds);
         } catch (InterruptedException e) {
