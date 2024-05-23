@@ -2,7 +2,7 @@ package co.edu.uptc.pojos;
 
 import java.awt.Rectangle;
 
-public class Racket {
+public class RacketPojo {
     private int xCoordinate;
     private int yCoordinate;
     private Rectangle size;

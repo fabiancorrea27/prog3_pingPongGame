@@ -2,7 +2,7 @@ package co.edu.uptc.pojos;
 
 import java.awt.Rectangle;
 
-public class Ball {
+public class BallPojo {
     private int xCoordinate;
     private int yCoordinate;
     private Rectangle size;
