@@ -1,11 +1,10 @@
 package co.edu.uptc.pojos;
 
-import java.awt.Rectangle;
-
 public class RacketPojo {
     private int xCoordinate;
     private int yCoordinate;
-    private Rectangle size;
+    private int height;
+    private int width;
     
     public int getxCoordinate() {
         return xCoordinate;
@@ -19,12 +18,17 @@ public class RacketPojo {
     public void setyCoordinate(int yCoordinate) {
         this.yCoordinate = yCoordinate;
     }
-    public Rectangle getSize() {
-        return size;
+    public int getHeight() {
+        return height;
     }
-    public void setSize(Rectangle size) {
-        this.size = size;
+    public void setHeight(int height) {
+        this.height = height;
     }
-
-    
+    public int getWidth() {
+        return width;
+    }
+    public void setWidth(int width) {
+        this.width = width;
+    }
+   
 }

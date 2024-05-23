@@ -1,13 +1,10 @@
 package co.edu.uptc.pojos;
 
-import java.awt.Rectangle;
-
 public class BallPojo {
     private int xCoordinate;
     private int yCoordinate;
-    private Rectangle size;
+    private int size;
 
-    
     public int getxCoordinate() {
         return xCoordinate;
     }
@@ -20,10 +17,10 @@ public class BallPojo {
     public void setyCoordinate(int yCoordinate) {
         this.yCoordinate = yCoordinate;
     }
-    public Rectangle getSize() {
+    public int getSize() {
         return size;
     }
-    public void setSize(Rectangle size) {
+    public void setSize(int size) {
         this.size = size;
-    }
+    }    
 }
