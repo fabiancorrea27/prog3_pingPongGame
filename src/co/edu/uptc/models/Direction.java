@@ -1,5 +1,5 @@
 package co.edu.uptc.models;
 
-public enum MovementDirection {
+public enum Direction {
     UP, DOWN, RIGHT, LEFT;
 }
