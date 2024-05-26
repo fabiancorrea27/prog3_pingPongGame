@@ -1,5 +1,6 @@
 package co.edu.uptc.models;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class GameManager implements ContractPlay.Model {
     private void initModels() {
         initBall();
         initRackets();
-        
+
     }
 
     private void initBall() {
@@ -46,11 +47,11 @@ public class GameManager implements ContractPlay.Model {
 
     private void initRackets() {
         racketsModel = new ArrayList<RacketModel>();
-        racketsModel.add(createRacket(Direction.LEFT));
-        racketsModel.add(createRacket(Direction.RIGHT));
+        racketsModel.add(createRacket(DirectionEnum.LEFT));
+        racketsModel.add(createRacket(DirectionEnum.RIGHT));
     }
 
-    private RacketModel createRacket(Direction direction) {
+    private RacketModel createRacket(DirectionEnum direction) {
         RacketModel racketModel = new RacketModel();
         racketModel.setHorizontalLimit(horizontalLimit);
         racketModel.setVerticalLimit(verticalLimit);
@@ -94,4 +95,22 @@ public class GameManager implements ContractPlay.Model {
         }
     }
 
+    @Override
+    public void racketsMovement(int keyCode) {
+        System.out.println(KeyEvent.getKeyText(keyCode));
+        switch (keyCode) {
+            case KeyEvent.VK_W:
+                racketsModel.get(0).move(DirectionEnum.UP);
+                break;
+            case KeyEvent.VK_S:
+                racketsModel.get(0).move(DirectionEnum.DOWN);
+                break;
+            case KeyEvent.VK_UP:
+                racketsModel.get(1).move(DirectionEnum.UP);
+                break;
+            case KeyEvent.VK_DOWN:
+                racketsModel.get(1).move(DirectionEnum.DOWN);
+                break;
+        }
+    }
 }

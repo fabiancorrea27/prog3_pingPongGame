@@ -14,6 +14,7 @@ public interface ContractPlay {
         public List<RacketPojo> getRacketsPojo();
         public void setHorizontalLimit(int horizontalLimit);
         public void setVerticalLimit(int verticalLimit);
+        public void racketsMovement(int keyCode);
     }
 
     public interface View {
@@ -33,6 +34,7 @@ public interface ContractPlay {
         public List<RacketPojo> getRacketsPojo();
         public void setHorizontalLimit(int horizontalLimit);
         public void setVerticalLimit(int verticalLimit);
+        public void racketsMovement(int keyCode);
         
     }
 }

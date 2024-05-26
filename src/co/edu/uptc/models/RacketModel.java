@@ -7,18 +7,19 @@ public class RacketModel {
     private int movementSpeed;
     private int verticalLimit;
     private int horizontalLimit;
-    private Direction position;
+    private DirectionEnum position;
 
     public RacketModel() {
         racket = new RacketPojo();
         racket.setHeight(60);
         racket.setWidth(20);
+        movementSpeed = 10;
     }
 
-    public void move(Direction movementDirection) {
-        if (movementDirection == Direction.UP) {
+    public void move(DirectionEnum movementDirection) {
+        if (movementDirection == DirectionEnum.UP) {
             moveUp();
-        } else if (movementDirection == Direction.DOWN) {
+        } else if (movementDirection == DirectionEnum.DOWN) {
             moveDown();
         }
     }
@@ -45,9 +46,9 @@ public class RacketModel {
     }
 
     private void configureHorizontalPosition() {
-        if (position == Direction.LEFT) {
+        if (position == DirectionEnum.LEFT) {
             racket.setxCoordinate(10);
-        } else if (position == Direction.RIGHT) {
+        } else if (position == DirectionEnum.RIGHT) {
             racket.setxCoordinate((horizontalLimit - racket.getWidth()) - 10);
         }
     }
@@ -72,7 +73,7 @@ public class RacketModel {
         this.verticalLimit = verticalLimit;
     }
 
-    public void setPosition(Direction position) {
+    public void setPosition(DirectionEnum position) {
         this.position = position;
     }
 

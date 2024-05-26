@@ -62,6 +62,11 @@ public class Presenter implements ContractPlay.Presenter{
         model.setVerticalLimit(verticalLimit);
     }
 
+    @Override
+    public void racketsMovement(int keyCode) {
+        model.racketsMovement(keyCode);
+    }
+
  
 
    

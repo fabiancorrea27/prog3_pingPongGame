@@ -7,7 +7,7 @@ public class BallModel {
 
     private BallPojo ballPojo;
     private int movementSpeed;
-    private Direction movementDirection;
+    private DirectionEnum movementDirection;
     private int horizontalLimit;
     private int verticalLimit;
 
@@ -21,9 +21,9 @@ public class BallModel {
     private void chooseRandomDirection(){
         int randomNumber = (int) (Math.random() * 2);
         if(randomNumber == 0){
-            this.movementDirection = Direction.RIGHT;
+            this.movementDirection = DirectionEnum.RIGHT;
         } else {
-            this.movementDirection = Direction.LEFT;
+            this.movementDirection = DirectionEnum.LEFT;
         }
     }
 
@@ -42,9 +42,9 @@ public class BallModel {
     }
 
     private void move() {
-        if (movementDirection == Direction.RIGHT) {
+        if (movementDirection == DirectionEnum.RIGHT) {
             moveRight();
-        } else if (movementDirection == Direction.LEFT) {
+        } else if (movementDirection == DirectionEnum.LEFT) {
             moveLeft();
         }
     }
@@ -54,7 +54,7 @@ public class BallModel {
             ballPojo.setxCoordinate(ballPojo.getxCoordinate() + movementSpeed);
         } else {
             ballPojo.setxCoordinate(horizontalLimit - ballPojo.getSize());
-            this.movementDirection = Direction.LEFT;
+            this.movementDirection = DirectionEnum.LEFT;
         }
     }
 
@@ -63,7 +63,7 @@ public class BallModel {
             ballPojo.setxCoordinate(ballPojo.getxCoordinate() - movementSpeed);
         } else {
             ballPojo.setxCoordinate(0);
-            this.movementDirection = Direction.RIGHT;
+            this.movementDirection = DirectionEnum.RIGHT;
         }
     }
 

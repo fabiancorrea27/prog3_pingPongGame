@@ -1,5 +1,5 @@
 package co.edu.uptc.models;
 
-public enum Direction {
+public enum DirectionEnum {
     UP, DOWN, RIGHT, LEFT;
 }

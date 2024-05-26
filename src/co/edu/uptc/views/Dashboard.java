@@ -1,5 +1,8 @@
 package co.edu.uptc.views;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 
 import co.edu.uptc.presenters.ContractPlay;
@@ -14,6 +17,7 @@ public class Dashboard extends JFrame implements ContractPlay.View {
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        putKeyListener();
         gamePanel = new GamePanel(this);
         this.add(gamePanel);
     }
@@ -27,6 +31,15 @@ public class Dashboard extends JFrame implements ContractPlay.View {
     public void begin() {
         this.setVisible(true);
         gamePanel.begin();
+    }
+
+    private void putKeyListener() {
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                presenter.racketsMovement(e.getKeyCode());
+            }
+        });
     }
 
     public ContractPlay.Presenter getPresenter() {
