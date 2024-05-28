@@ -16,21 +16,14 @@ public class GamePanel extends JPanel {
     private boolean running;
     private BallPojo ball;
     private List<RacketPojo> rackets;
-    private GameFrame dashboard;
+    private GameFrame gameFrame;
 
     public GamePanel(GameFrame dashboard) {
-        this.dashboard = dashboard;
-        this.putComponentListener();
+        this.gameFrame = dashboard;
+        
     }
-    private void putComponentListener() {
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                dashboard.getPresenter().setHorizontalLimit(getWidth());
-                dashboard.getPresenter().setVerticalLimit(getHeight());
-            }
-        });
-    }
+   
+    // }
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -62,8 +55,8 @@ public class GamePanel extends JPanel {
     }
 
     public void loadObjectsPojo() {
-        this.ball = dashboard.getPresenter().getBallPojo();
-        this.rackets = dashboard.getPresenter().getRacketsPojo();
+        this.ball = gameFrame.getPresenter().getBallPojoToDraw();
+        this.rackets = gameFrame.getPresenter().getRacketsPojoToDraw();
     }
 
     public void begin() {

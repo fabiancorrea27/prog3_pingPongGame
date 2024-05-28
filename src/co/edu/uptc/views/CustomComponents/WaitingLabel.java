@@ -3,7 +3,6 @@ package co.edu.uptc.views.CustomComponents;
 import java.awt.Color;
 import java.awt.Font;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 public class WaitingLabel extends JLabel {

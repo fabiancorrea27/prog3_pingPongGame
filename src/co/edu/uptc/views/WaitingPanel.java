@@ -1,55 +1,65 @@
-package co.edu.uptc.views.Server;
+package co.edu.uptc.views;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import co.edu.uptc.utils.RoleEnum;
 import co.edu.uptc.views.CustomComponents.WaitingLabel;
 
 public class WaitingPanel extends JPanel {
 
-    private JLabel lblIpText, lblIpAdress, lblPortText, lblPort, lblWait, lblPlayers, lblPlayersAmount;
+    private JLabel lblWait, lblPlayers, lblPlayersAmount, lblStatus;
+    private JButton btnStart;
+    private RoleEnum role;
     private int waitingMessageIndex = 0;
 
-    public WaitingPanel() {
+    public WaitingPanel(ActionListener actionListener, RoleEnum role) {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
-        initComponents();
+        this.role = role;
+        initComponents(actionListener);
         addComponents();
         waitingAnimation();
     }
 
-    private void initComponents() {
-        lblIpText = new WaitingLabel("IP:");
-        lblIpAdress = new WaitingLabel("0");
-        lblPortText = new WaitingLabel("Puerto:");
-        lblPort = new WaitingLabel("9001");
+    private void initComponents(ActionListener actionListener) {
         lblWait = new WaitingLabel("Esperando a que se conecten");
         lblWait.setPreferredSize(new Dimension(400, 30));
         lblPlayers = new WaitingLabel("Conectados:");
         lblPlayersAmount = new WaitingLabel("0");
+        lblStatus = new JLabel("", JLabel.CENTER);
+        createStartButton(actionListener);
     }
 
     private void addComponents() {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.BOTH;
-        this.add(lblIpText, gbc);
-        this.add(lblIpAdress, gbc);
-        this.add(lblPortText, gbc);
         gbc.gridwidth = GridBagConstraints.REMAINDER;
-        this.add(lblPort, gbc);
         this.add(lblWait, gbc);
         gbc.gridwidth = 1;
         this.add(lblPlayers, gbc);
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         this.add(lblPlayersAmount, gbc);
+        gbc.fill = GridBagConstraints.VERTICAL;
+        if (role == RoleEnum.SERVER) {
+            this.add(btnStart, gbc);
+            this.add(lblStatus, gbc);
+        }
+    }
+
+    private void createStartButton(ActionListener actionListener) {
+        btnStart = new JButton("Iniciar");
+        btnStart.addActionListener(actionListener);
     }
 
     private void waitingAnimation() {
@@ -66,7 +76,12 @@ public class WaitingPanel extends JPanel {
         lblPlayersAmount.setText(String.valueOf(playersAmount));
     }
 
-    public void changeIpAdress(String ipAdress) {
-        lblIpAdress.setText(ipAdress);
+    public void setRole(RoleEnum role) {
+        this.role = role;
+    }
+
+    public void changeFailStatus(String status) {
+        lblStatus.setText(status);
+        lblStatus.setForeground(Color.RED);
     }
 }

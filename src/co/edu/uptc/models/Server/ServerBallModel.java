@@ -1,21 +1,25 @@
-package co.edu.uptc.models;
+package co.edu.uptc.models.Server;
 
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.utils.DirectionEnum;
 import co.edu.uptc.utils.Util;
 
-public class BallModel {
+public class ServerBallModel {
 
     private BallPojo ballPojo;
+    private BallPojo ballPojoToDraw;
     private int movementSpeed;
     private DirectionEnum movementDirection;
     private int horizontalLimit;
     private int verticalLimit;
+    private double horizontalDrawScale;
+    private double verticalDrawScale;
 
-    public BallModel() {
+    public ServerBallModel() {
         ballPojo = new BallPojo();
         movementSpeed = 10;
         ballPojo.setSize(20);
+        ballPojoToDraw = new BallPojo();
         chooseRandomDirection();
     }
 
@@ -33,8 +37,9 @@ public class BallModel {
             @Override
             public void run() {
                 while (true) {
-                    Util.sleep(60);
+                    Util.sleep(400);
                     move();
+                    configureBallDrawScale();
                 }
             }
         });
@@ -60,12 +65,27 @@ public class BallModel {
     }
 
     private void moveLeft() {
+        System.out.println(ballPojo.getxCoordinate() > 0);
         if (ballPojo.getxCoordinate() > 0) {
             ballPojo.setxCoordinate(ballPojo.getxCoordinate() - movementSpeed);
         } else {
             ballPojo.setxCoordinate(0);
             this.movementDirection = DirectionEnum.RIGHT;
         }
+    }
+
+    private void configureBallDrawScale() {
+        copyValuesToBallPojoToDraw();
+        ballPojoToDraw.setxCoordinate((int) (horizontalDrawScale * ballPojo.getxCoordinate()));
+        System.out.println(ballPojo.getxCoordinate() + " " + ballPojoToDraw.getxCoordinate());
+        ballPojoToDraw.setyCoordinate((int) (verticalDrawScale * ballPojo.getyCoordinate()));
+        ballPojoToDraw.setSize((int) (horizontalDrawScale * ballPojo.getSize()));
+    }
+
+    private void copyValuesToBallPojoToDraw(){
+        ballPojoToDraw.setSize(ballPojo.getSize());
+        ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate());
+        ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
     }
 
     public void configurePosition(){
@@ -84,5 +104,18 @@ public class BallModel {
     public void setVerticalLimit(int verticalLimit) {
         this.verticalLimit = verticalLimit;
     }
+
+    public BallPojo getBallPojoToDraw() {
+        return ballPojoToDraw;
+    }
+
+    public void setHorizontalDrawScale(double horizontalDrawScale) {
+        this.horizontalDrawScale = horizontalDrawScale;
+    }
+
+    public void setVerticalDrawScale(double verticalDrawScale) {
+        this.verticalDrawScale = verticalDrawScale;
+    }
+    
     
 }

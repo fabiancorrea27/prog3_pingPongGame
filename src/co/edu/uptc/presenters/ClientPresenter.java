@@ -2,17 +2,17 @@ package co.edu.uptc.presenters;
 
 import java.util.List;
 
-import co.edu.uptc.models.GameManager;
+import co.edu.uptc.models.Client.ClientGameManager;
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
-import co.edu.uptc.presenters.ContractPlay.Model;
-import co.edu.uptc.presenters.ContractPlay.View;
-import co.edu.uptc.views.Server.ServerDashboard;
+import co.edu.uptc.presenters.ContractClientPlay.Model;
+import co.edu.uptc.presenters.ContractClientPlay.View;
+import co.edu.uptc.views.Client.ClientDashboard;
 
-public class Presenter implements ContractPlay.Presenter {
+public class ClientPresenter implements ContractClientPlay.Presenter {
 
-    private ContractPlay.Model model;
-    private ContractPlay.View view;
+    private ContractClientPlay.Model model;
+    private ContractClientPlay.View view;
 
     @Override
     public void setModel(Model model) {
@@ -26,24 +26,21 @@ public class Presenter implements ContractPlay.Presenter {
 
     @Override
     public void begin() {
+        makeMVP();
         view.begin();
-        model.start();
     }
 
     @Override
-    public void makeMVP(String role) {
-        if (role.equals("server")) {
-            ServerDashboard serverDashboard = new ServerDashboard();
-            serverDashboard.setPresenter(this);
-            setView(serverDashboard);
-        } else {
-
-        }
-
-        GameManager gameManager = new GameManager();
+    public void makeMVP() {
+        ClientDashboard clientDashboard = new ClientDashboard();
+        clientDashboard.setPresenter(this);
+        setView(clientDashboard);
+        ClientGameManager gameManager = new ClientGameManager();
         gameManager.setPresenter(this);
         setModel(gameManager);
     }
+
+  
 
     @Override
     public BallPojo getBallPojo() {
@@ -76,8 +73,13 @@ public class Presenter implements ContractPlay.Presenter {
     }
 
     @Override
+    public boolean checkServerIp(String ipAdress) {
+        return model.checkServerIp(ipAdress);
+    }
+
+    @Override
     public void changeClientsAmount(int clientsAmount) {
-        view.changeClientsAmount(clientsAmount);
+       view.changeClientsAmount(clientsAmount);
     }
 
 }

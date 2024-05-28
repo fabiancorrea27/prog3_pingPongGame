@@ -1,20 +1,25 @@
 package co.edu.uptc.views.Server;
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JFrame;
 
-import co.edu.uptc.presenters.ContractPlay;
-import co.edu.uptc.presenters.ContractPlay.Presenter;
+import co.edu.uptc.presenters.ContractServerPlay;
+import co.edu.uptc.presenters.ContractServerPlay.Presenter;
+import co.edu.uptc.utils.RoleEnum;
+import co.edu.uptc.views.WaitingPanel;
 
-public class ServerDashboard extends JFrame implements ContractPlay.View {
+public class ServerDashboard extends JFrame implements ContractServerPlay.View {
 
-    private ContractPlay.Presenter presenter;
+    private ContractServerPlay.Presenter presenter;
     private GameFrame gameFrame = new GameFrame();
-    private WaitingPanel waitingPanel = new WaitingPanel();
+    private WaitingPanel waitingPanel = new WaitingPanel(startButtonActionListener(), RoleEnum.SERVER);
 
     public ServerDashboard() {
         this.setSize(600, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        gameFrame.setDashboard(this);
         this.add(waitingPanel);
     }
 
@@ -28,8 +33,20 @@ public class ServerDashboard extends JFrame implements ContractPlay.View {
         this.setVisible(true);
     }
 
-    public ContractPlay.Presenter getPresenter() {
+    public ContractServerPlay.Presenter getPresenter() {
         return presenter;
+    }
+
+    private ActionListener startButtonActionListener() {
+        return e -> {
+            // if (presenter.checkMinClientsAmount()) {
+                this.dispose();
+                presenter.beginGame();
+                beginGame();
+            // } else {
+            //     waitingPanel.changeFailStatus("Debe haber minimo dos jugadores");
+            // }
+        };
     }
 
     @Override

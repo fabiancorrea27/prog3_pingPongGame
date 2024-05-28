@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.JFrame;
 
-import co.edu.uptc.presenters.ContractPlay;
+import co.edu.uptc.presenters.ContractServerPlay;
 
 public class GameFrame extends JFrame {
 
@@ -16,29 +16,23 @@ public class GameFrame extends JFrame {
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        putKeyListener();
+        this.setResizable(false);
+        this.setTitle("Ping Pong Game");
         gamePanel = new GamePanel(this);
         this.add(gamePanel);
     }
 
-  
-
-    private void putKeyListener() {
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                dashboard.getPresenter().racketsMovement(e.getKeyCode());
-            }
-        });
-    }
-
-    public void begin(){
+    public void begin() {
+        this.setVisible(true);
         gamePanel.begin();
     }
 
-    public ContractPlay.Presenter getPresenter() {
+    public ContractServerPlay.Presenter getPresenter() {
         return dashboard.getPresenter();
     }
 
-   
+    public void setDashboard(ServerDashboard dashboard) {
+        this.dashboard = dashboard;
+    }
+
 }

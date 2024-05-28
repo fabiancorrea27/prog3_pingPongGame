@@ -5,16 +5,16 @@ import java.util.List;
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
 
-public interface ContractPlay {
+public interface ContractServerPlay {
 
     public interface Model {
         public void setPresenter(Presenter presenter);
         public void start();   
-        public BallPojo getBallPojo();
-        public List<RacketPojo> getRacketsPojo();
-        public void setHorizontalLimit(int horizontalLimit);
-        public void setVerticalLimit(int verticalLimit);
+        public void startGame();
+        public BallPojo getBallPojoToDraw();
+        public List<RacketPojo> getRacketsPojoToDraw();
         public void racketsMovement(int keyCode);
+        public boolean checkMinClientsAmount();
     }
 
     public interface View {
@@ -28,19 +28,17 @@ public interface ContractPlay {
     public interface Presenter {
         public void setModel(Model model);
         public void setView(View view);
-        public void makeMVP(String role);
+        public void makeMVP();
         public void begin();
 
         // view
         public void beginGame();
         public void changeClientsAmount(int clientsAmount);
         
-        // model
-        public BallPojo getBallPojo();
-        public List<RacketPojo> getRacketsPojo();
-        public void setHorizontalLimit(int horizontalLimit);
-        public void setVerticalLimit(int verticalLimit);
-        public void racketsMovement(int keyCode);
         
+        // model
+        public BallPojo getBallPojoToDraw();
+        public List<RacketPojo> getRacketsPojoToDraw();
+        public boolean checkMinClientsAmount();
     }
 }

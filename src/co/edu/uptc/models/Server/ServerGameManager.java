@@ -1,30 +1,30 @@
-package co.edu.uptc.models;
+package co.edu.uptc.models.Server;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-import co.edu.uptc.net.Server;
+import co.edu.uptc.net.ServerManager;
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
-import co.edu.uptc.presenters.ContractPlay;
-import co.edu.uptc.presenters.ContractPlay.Presenter;
+import co.edu.uptc.presenters.ContractServerPlay;
+import co.edu.uptc.presenters.ContractServerPlay.Presenter;
 import co.edu.uptc.utils.DirectionEnum;
 import co.edu.uptc.utils.Util;
 
-public class GameManager implements ContractPlay.Model {
+public class ServerGameManager implements ContractServerPlay.Model {
 
-    private ContractPlay.Presenter presenter;
-    private BallModel ballModel;
-    private List<RacketModel> racketsModel;
+    private ContractServerPlay.Presenter presenter;
+    private ServerBallModel ballModel;
+    private List<ServerRacketModel> racketsModel;
     private int horizontalLimit;
     private int verticalLimit;
-    private Server server;
+    private double horizontalDrawScale;
+    private double verticalDrawScale;
+    private ServerManager server;
 
-    public GameManager() {
-        server = new Server();
+    public ServerGameManager() {
+        server = new ServerManager();
     }
 
     @Override
@@ -36,10 +36,6 @@ public class GameManager implements ContractPlay.Model {
     public void start() {
         server.begin();
         lookForGameStart();
-        presenter.beginGame();
-        initModels();
-        ballModel.startMovement();
-
     }
 
     private boolean lookForGameStart() {
@@ -62,6 +58,14 @@ public class GameManager implements ContractPlay.Model {
         return true;
     }
 
+    @Override
+    public void startGame() {
+        setLimits();
+        calculateDrawScale();
+        initModels();
+        ballModel.startMovement();
+    }
+
     private void initModels() {
         initBall();
         initRackets();
@@ -69,60 +73,54 @@ public class GameManager implements ContractPlay.Model {
     }
 
     private void initBall() {
-        ballModel = new BallModel();
+        ballModel = new ServerBallModel();
         ballModel.setHorizontalLimit(horizontalLimit);
         ballModel.setVerticalLimit(verticalLimit);
+        ballModel.setHorizontalDrawScale(horizontalDrawScale);
+        ballModel.setVerticalDrawScale(verticalDrawScale);
         ballModel.configurePosition();
     }
 
     private void initRackets() {
-        racketsModel = new ArrayList<RacketModel>();
+        racketsModel = new ArrayList<ServerRacketModel>();
         racketsModel.add(createRacket(DirectionEnum.LEFT));
         racketsModel.add(createRacket(DirectionEnum.RIGHT));
     }
 
-    private RacketModel createRacket(DirectionEnum direction) {
-        RacketModel racketModel = new RacketModel();
+    private ServerRacketModel createRacket(DirectionEnum direction) {
+        ServerRacketModel racketModel = new ServerRacketModel();
         racketModel.setHorizontalLimit(horizontalLimit);
         racketModel.setVerticalLimit(verticalLimit);
+        racketModel.setHorizontalDrawScale(horizontalDrawScale);
+        racketModel.setVerticalDrawScale(verticalDrawScale);
         racketModel.setPosition(direction);
         racketModel.configurePosition();
+        racketModel.calculateRacketDrawScale();
         return racketModel;
     }
 
-    @Override
-    public BallPojo getBallPojo() {
-        return ballModel.getBallPojo();
+    private void setLimits() {
+        this.horizontalLimit = server.getClients().size() * 1000;
+        this.verticalLimit = 600;
+    }
+
+    private void calculateDrawScale() {
+        horizontalDrawScale = 1000.0 / horizontalLimit;
+        verticalDrawScale = 600.0 / verticalLimit;
     }
 
     @Override
-    public List<RacketPojo> getRacketsPojo() {
-        List<RacketPojo> racketPojos = new ArrayList<RacketPojo>();
-        for (RacketModel racketModel : racketsModel) {
-            racketPojos.add(racketModel.getRacket());
-        }
-        return racketPojos;
+    public BallPojo getBallPojoToDraw() {
+        return ballModel.getBallPojoToDraw();
     }
 
     @Override
-    public void setHorizontalLimit(int horizontalLimit) {
-        this.horizontalLimit = horizontalLimit;
-        if ((ballModel != null) && (racketsModel != null)) {
-            ballModel.setHorizontalLimit(horizontalLimit);
-            for (RacketModel racketModel : racketsModel) {
-                racketModel.setHorizontalLimit(horizontalLimit);
-            }
+    public List<RacketPojo> getRacketsPojoToDraw() {
+        List<RacketPojo> racketPojosToDraw = new ArrayList<RacketPojo>();
+        for (ServerRacketModel racketModel : racketsModel) {
+            racketPojosToDraw.add(racketModel.getRacketPojoToDraw());
         }
-    }
-
-    @Override
-    public void setVerticalLimit(int verticalLimit) {
-        this.verticalLimit = verticalLimit;
-        if (racketsModel != null) {
-            for (RacketModel racketModel : racketsModel) {
-                racketModel.setVerticalLimit(verticalLimit);
-            }
-        }
+        return racketPojosToDraw;
     }
 
     @Override
@@ -143,4 +141,10 @@ public class GameManager implements ContractPlay.Model {
                 break;
         }
     }
+
+    @Override
+    public boolean checkMinClientsAmount() {
+        return server.getClients().size() >= 2;
+    }
+
 }

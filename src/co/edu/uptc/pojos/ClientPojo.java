@@ -1,8 +1,11 @@
 package co.edu.uptc.pojos;
 
-public class ClientPojo {
+import java.io.Serializable;
+
+public class ClientPojo implements Serializable {
     
     private String ipAddress;
+    private int clientsAmount;
     private boolean isPlayer;
 
     public String getIpAddress() {
@@ -21,5 +24,12 @@ public class ClientPojo {
         this.isPlayer = isPlayer;
     }
 
+    public int getClientsAmount() {
+        return clientsAmount;
+    }
+
+    public void setClientsAmount(int clientsAmount) {
+        this.clientsAmount = clientsAmount;
+    } 
     
 }
