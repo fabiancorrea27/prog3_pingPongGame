@@ -43,28 +43,18 @@ public class ClientPresenter implements ContractClientPlay.Presenter {
   
 
     @Override
-    public BallPojo getBallPojo() {
-        return model.getBallPojo();
+    public BallPojo getBallPojoToDraw() {
+        return model.getBallPojoToDraw();
     }
 
     @Override
-    public List<RacketPojo> getRacketsPojo() {
-        return model.getRacketsPojo();
-    }
-
-    @Override
-    public void setHorizontalLimit(int horizontalLimit) {
-        model.setHorizontalLimit(horizontalLimit);
-    }
-
-    @Override
-    public void setVerticalLimit(int verticalLimit) {
-        model.setVerticalLimit(verticalLimit);
+    public RacketPojo getRacketsPojoToDraw() {
+        return model.getRacketPojoToDraw();
     }
 
     @Override
     public void racketsMovement(int keyCode) {
-        model.racketsMovement(keyCode);
+        model.racketMovement(keyCode);
     }
 
     @Override

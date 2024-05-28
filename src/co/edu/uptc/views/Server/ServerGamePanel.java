@@ -11,14 +11,14 @@ import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.utils.Util;
 
-public class GamePanel extends JPanel {
+public class ServerGamePanel extends JPanel {
 
     private boolean running;
     private BallPojo ball;
     private List<RacketPojo> rackets;
-    private GameFrame gameFrame;
+    private ServerGameFrame gameFrame;
 
-    public GamePanel(GameFrame dashboard) {
+    public ServerGamePanel(ServerGameFrame dashboard) {
         this.gameFrame = dashboard;
         
     }

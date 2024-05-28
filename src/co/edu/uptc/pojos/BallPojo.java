@@ -1,6 +1,8 @@
 package co.edu.uptc.pojos;
 
-public class BallPojo {
+import java.io.Serializable;
+
+public class BallPojo implements Serializable {
     private int xCoordinate;
     private int yCoordinate;
     private int size;
@@ -23,4 +25,6 @@ public class BallPojo {
     public void setSize(int size) {
         this.size = size;
     }    
+
+    
 }

@@ -1,10 +1,16 @@
 package co.edu.uptc.pojos;
 
-public class RacketPojo {
+import java.io.Serializable;
+
+import co.edu.uptc.utils.DirectionEnum;
+
+public class RacketPojo implements Serializable {
     private int xCoordinate;
     private int yCoordinate;
     private int height;
     private int width;
+    private boolean isAvailable;
+    private DirectionEnum position;
     
     public int getxCoordinate() {
         return xCoordinate;
@@ -30,5 +36,19 @@ public class RacketPojo {
     public void setWidth(int width) {
         this.width = width;
     }
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+    public DirectionEnum getPosition() {
+        return position;
+    }
+    public void setPosition(DirectionEnum position) {
+        this.position = position;
+    }
+
+    
    
 }

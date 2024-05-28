@@ -7,18 +7,18 @@ import javax.swing.JFrame;
 
 import co.edu.uptc.presenters.ContractServerPlay;
 
-public class GameFrame extends JFrame {
+public class ServerGameFrame extends JFrame {
 
     private ServerDashboard dashboard;
-    private GamePanel gamePanel;
+    private ServerGamePanel gamePanel;
 
-    public GameFrame() {
+    public ServerGameFrame() {
         this.setSize(1000, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Ping Pong Game");
-        gamePanel = new GamePanel(this);
+        gamePanel = new ServerGamePanel(this);
         this.add(gamePanel);
     }
 

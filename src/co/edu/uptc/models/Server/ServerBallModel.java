@@ -17,7 +17,7 @@ public class ServerBallModel {
 
     public ServerBallModel() {
         ballPojo = new BallPojo();
-        movementSpeed = 10;
+        movementSpeed = 5;
         ballPojo.setSize(20);
         ballPojoToDraw = new BallPojo();
         chooseRandomDirection();
@@ -37,9 +37,9 @@ public class ServerBallModel {
             @Override
             public void run() {
                 while (true) {
-                    Util.sleep(400);
-                    move();
                     configureBallDrawScale();
+                    Util.sleep(5);
+                    move();
                 }
             }
         });
@@ -65,7 +65,6 @@ public class ServerBallModel {
     }
 
     private void moveLeft() {
-        System.out.println(ballPojo.getxCoordinate() > 0);
         if (ballPojo.getxCoordinate() > 0) {
             ballPojo.setxCoordinate(ballPojo.getxCoordinate() - movementSpeed);
         } else {
@@ -77,7 +76,6 @@ public class ServerBallModel {
     private void configureBallDrawScale() {
         copyValuesToBallPojoToDraw();
         ballPojoToDraw.setxCoordinate((int) (horizontalDrawScale * ballPojo.getxCoordinate()));
-        System.out.println(ballPojo.getxCoordinate() + " " + ballPojoToDraw.getxCoordinate());
         ballPojoToDraw.setyCoordinate((int) (verticalDrawScale * ballPojo.getyCoordinate()));
         ballPojoToDraw.setSize((int) (horizontalDrawScale * ballPojo.getSize()));
     }

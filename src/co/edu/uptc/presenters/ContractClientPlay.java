@@ -10,11 +10,11 @@ public interface ContractClientPlay {
     public interface Model {
         public void setPresenter(Presenter presenter);
         public void start();   
-        public BallPojo getBallPojo();
-        public List<RacketPojo> getRacketsPojo();
+        public BallPojo getBallPojoToDraw();
+        public RacketPojo getRacketPojoToDraw();
         public void setHorizontalLimit(int horizontalLimit);
         public void setVerticalLimit(int verticalLimit);
-        public void racketsMovement(int keyCode);
+        public void racketMovement(int keyCode);
         public boolean checkServerIp(String ipAdress);
     }
 
@@ -37,10 +37,8 @@ public interface ContractClientPlay {
         public void changeClientsAmount(int clientsAmount);
         
         // model
-        public BallPojo getBallPojo();
-        public List<RacketPojo> getRacketsPojo();
-        public void setHorizontalLimit(int horizontalLimit);
-        public void setVerticalLimit(int verticalLimit);
+        public BallPojo getBallPojoToDraw();
+        public RacketPojo getRacketsPojoToDraw();
         public void racketsMovement(int keyCode);
         public boolean checkServerIp(String ipAdress);
     }

@@ -1,46 +1,48 @@
 package co.edu.uptc.net;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 import co.edu.uptc.pojos.ClientPojo;
+import co.edu.uptc.pojos.RacketPojo;
 
 public class ClientManager {
 
-    
     private String serverIpAdress;
     private int clientsAmount;
+    private ClientPojo clientPojo;
+    private RacketPojo racketPojo;
 
-    public ClientManager(){
+    public ClientManager() {
+        clientPojo = new ClientPojo();
+        racketPojo = new RacketPojo();
         listenServerPackages();
     }
-    
-    public void begin(){
-        try {
-            Socket socket = new Socket(serverIpAdress, 9001);
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            socket.close();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void listenServerPackages(){
+    private void listenServerPackages() {
         Thread listenServerPackagesThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     ServerSocket serverSocket = new ServerSocket(9002);
-                    while(true){
+                    while (true) {
                         Socket socket = serverSocket.accept();
+
+                        // Receive client pojo with ball pojo updated
                         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-                        ClientPojo client = (ClientPojo) input.readObject();
-                        clientsAmount = client.getClientsAmount();
+                        clientPojo = (ClientPojo) input.readObject();
+                        if (clientPojo.getRacketPojo() != null) {
+                            clientPojo.getRacketPojo().setAvailable(clientPojo.isPlayer());
+                        }
+                        clientsAmount = clientPojo.getClientsAmount();
+                        // Send client pojo with racket pojo updated
+                        ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+                        clientPojo.setRacketPojo(racketPojo);
+                        output.writeObject(clientPojo);
                         socket.close();
                     }
                 } catch (IOException | ClassNotFoundException e) {
@@ -50,10 +52,10 @@ public class ClientManager {
         });
         listenServerPackagesThread.setName("Listen Server Packages Thread");
         listenServerPackagesThread.start();
-       
+
     }
 
-    public void pingWithServer() throws UnknownHostException, IOException{
+    public void pingWithServer() throws UnknownHostException, IOException {
         Socket socket = new Socket(serverIpAdress, 9001);
         socket.close();
     }
@@ -70,5 +72,20 @@ public class ClientManager {
         return clientsAmount;
     }
 
-    
+    public boolean isStarted() {
+        return clientPojo.isStarted();
+    }
+
+    public ClientPojo getClientPojo() {
+        return clientPojo;
+    }
+
+    public RacketPojo getRacketPojo() {
+        return racketPojo;
+    }
+
+    public void setRacketPojo(RacketPojo racketPojo) {
+        this.racketPojo = racketPojo;
+    }
+
 }

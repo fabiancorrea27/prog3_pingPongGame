@@ -63,6 +63,8 @@ public class ServerGameManager implements ContractServerPlay.Model {
         setLimits();
         calculateDrawScale();
         initModels();
+        server.beginEvents();
+        sendAndReceiveInformationFromClient();
         ballModel.startMovement();
     }
 
@@ -93,20 +95,37 @@ public class ServerGameManager implements ContractServerPlay.Model {
         racketModel.setVerticalLimit(verticalLimit);
         racketModel.setHorizontalDrawScale(horizontalDrawScale);
         racketModel.setVerticalDrawScale(verticalDrawScale);
-        racketModel.setPosition(direction);
+        racketModel.getRacketPojo().setPosition(direction);
         racketModel.configurePosition();
         racketModel.calculateRacketDrawScale();
         return racketModel;
     }
 
+    private void sendAndReceiveInformationFromClient() {
+        Thread sendClientInformationThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while(true){
+                    server.setBallPojo(ballModel.getBallPojo());
+                    racketsModel.get(0).setRacketPojo(server.getClients().get(0).getRacketPojo());
+                    racketsModel.get(1).setRacketPojo(server.getClients().get(1).getRacketPojo());
+                }
+            }
+            
+        });
+        sendClientInformationThread.setName("Send Client Information Thread");
+        sendClientInformationThread.start();
+    }
+
     private void setLimits() {
-        this.horizontalLimit = server.getClients().size() * 1000;
-        this.verticalLimit = 600;
+        this.horizontalLimit = server.getClients().size() * (1000 - 16);
+        this.verticalLimit = 600 - 40;
     }
 
     private void calculateDrawScale() {
-        horizontalDrawScale = 1000.0 / horizontalLimit;
-        verticalDrawScale = 600.0 / verticalLimit;
+        horizontalDrawScale = (1000.0 - 16.0) / horizontalLimit;
+        verticalDrawScale = (600.0 - 40.0) / verticalLimit;
     }
 
     @Override
@@ -146,5 +165,4 @@ public class ServerGameManager implements ContractServerPlay.Model {
     public boolean checkMinClientsAmount() {
         return server.getClients().size() >= 2;
     }
-
 }

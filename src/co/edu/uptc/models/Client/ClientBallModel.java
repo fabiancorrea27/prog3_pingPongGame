@@ -5,23 +5,37 @@ import co.edu.uptc.pojos.BallPojo;
 public class ClientBallModel {
 
     private BallPojo ballPojo;
-    private BallPojo ballPojoToShow;
+    private BallPojo ballPojoToDraw;
+    private int boardPosition;
 
     public ClientBallModel() {
         ballPojo = new BallPojo();
         ballPojo.setSize(20);
-        ballPojoToShow = ballPojo;
+        ballPojoToDraw = new BallPojo();
+        ballPojo.setSize(ballPojo.getSize());
+    }
+
+    public void calculateBallPosition() {
+
+        ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate() - ((1000 - 16) * boardPosition));
+        ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
+
     }
 
     public BallPojo getBallPojo() {
         return ballPojo;
     }
-    
-    public BallPojo getBallPojoToShow() {
-        return ballPojoToShow;
+
+    public BallPojo getBallPojoToDraw() {
+        return ballPojoToDraw;
     }
 
+    public void setBoardPosition(int boardPosition) {
+        this.boardPosition = boardPosition;
+    }
 
-    
-    
+    public void setBallPojo(BallPojo ballPojo) {
+        this.ballPojo = ballPojo;
+    }
+
 }

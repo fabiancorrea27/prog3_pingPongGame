@@ -11,7 +11,6 @@ public class ServerRacketModel {
     private int horizontalLimit;
     private double horizontalDrawScale;
     private double verticalDrawScale;
-    private DirectionEnum position;
 
     public ServerRacketModel() {
         racketPojo = new RacketPojo();
@@ -67,10 +66,10 @@ public class ServerRacketModel {
     }
 
     private void configureHorizontalPosition() {
-        if (position == DirectionEnum.LEFT) {
+        if (racketPojo.getPosition() == DirectionEnum.LEFT) {
             racketPojo.setxCoordinate(10);
-        } else if (position == DirectionEnum.RIGHT) {
-            racketPojo.setxCoordinate((horizontalLimit - racketPojo.getWidth()) - 25);
+        } else if (racketPojo.getPosition() == DirectionEnum.RIGHT) {
+            racketPojo.setxCoordinate(horizontalLimit - racketPojo.getWidth() - 10);
         }
     }
 
@@ -94,9 +93,6 @@ public class ServerRacketModel {
         this.verticalLimit = verticalLimit;
     }
 
-    public void setPosition(DirectionEnum position) {
-        this.position = position;
-    }
 
     public RacketPojo getRacketPojoToDraw() {
         return racketPojoToDraw;
@@ -110,4 +106,9 @@ public class ServerRacketModel {
         this.verticalDrawScale = verticalDrawScale;
     }
 
+    public void setRacketPojo(RacketPojo racketPojo) {
+        this.racketPojo = racketPojo;
+    }
+
+    
 }

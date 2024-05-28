@@ -5,25 +5,18 @@ import co.edu.uptc.utils.DirectionEnum;
 
 public class ClientRacketModel {
     private RacketPojo racketPojo;
-    private RacketPojo racketPojoToShow;
+    private RacketPojo racketPojoToDraw;
     private int verticalLimit;
-    private int horizontalLimit;
-    private int scale;
-    private DirectionEnum position;
     private int movementSpeed;
+    private int boardPosition;
 
     public ClientRacketModel() {
         racketPojo = new RacketPojo();
         racketPojo.setHeight(60);
         racketPojo.setWidth(20);
-        racketPojoToShow = racketPojo;
-    }
-
-    public void configureRacketPojoToShow() {
-        racketPojoToShow.setxCoordinate(racketPojo.getxCoordinate() * scale);
-        racketPojoToShow.setyCoordinate(racketPojo.getyCoordinate() * scale);
-        racketPojoToShow.setHeight(racketPojo.getHeight() * scale);
-        racketPojoToShow.setWidth(racketPojo.getWidth() * scale);
+        racketPojoToDraw = new RacketPojo();
+        racketPojoToDraw.setHeight(racketPojo.getHeight());
+        racketPojoToDraw.setWidth(racketPojo.getWidth());
     }
 
     public void move(DirectionEnum movementDirection) {
@@ -50,44 +43,22 @@ public class ClientRacketModel {
         }
     }
 
-    public void configurePosition() {
-        configureHorizontalPosition();
+    public void calculateRacketPosition(){
+        racketPojoToDraw.setxCoordinate(racketPojo.getxCoordinate() - ((1000 - 16) * boardPosition));
+        racketPojoToDraw.setyCoordinate(racketPojo.getyCoordinate());
     }
 
-    private void configureHorizontalPosition() {
-        if (position == DirectionEnum.LEFT) {
-            racketPojo.setxCoordinate(10);
-        } else if (position == DirectionEnum.RIGHT) {
-            racketPojo.setxCoordinate((horizontalLimit - racketPojo.getWidth()) - 10);
-        }
-    }
-
-    public void setHorizontalLimit(int horizontalLimit) {
-        this.horizontalLimit = horizontalLimit;
-    }
 
     public RacketPojo getRacketPojo() {
         return racketPojo;
-    }
-
-    public RacketPojo getRacketPojoToShow() {
-        return racketPojoToShow;
     }
 
     public void setVerticalLimit(int verticalLimit) {
         this.verticalLimit = verticalLimit;
     }
 
-    public void setScale(int scale) {
-        this.scale = scale;
-    }
-
-    public void setPosition(DirectionEnum position) {
-        this.position = position;
-    }
-
-    public DirectionEnum getPosition() {
-        return position;
+    public RacketPojo getRacketPojoToDraw() {
+        return racketPojoToDraw;
     }
 
 }

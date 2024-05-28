@@ -14,11 +14,13 @@ public class ClientDashboard extends JFrame implements ContractClientPlay.View {
     private ContractClientPlay.Presenter presenter;
     private InputAdressPanel inputAdressPanel = new InputAdressPanel(enterButtonActionListener());
     private WaitingPanel waitingPanel = new WaitingPanel(null, RoleEnum.CLIENT);
+    private ClientGameFrame gameFrame = new ClientGameFrame();
 
     public ClientDashboard() {
         this.setSize(600, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        gameFrame.setPresenter(presenter);
         this.add(inputAdressPanel);
     }
     @Override
@@ -48,8 +50,9 @@ public class ClientDashboard extends JFrame implements ContractClientPlay.View {
 
     @Override
     public void beginGame() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'beginGame'");
+        gameFrame.setPresenter(presenter);
+        this.dispose();
+        gameFrame.begin();
     }
     @Override
     public void changeClientsAmount(int clientsAmount) {

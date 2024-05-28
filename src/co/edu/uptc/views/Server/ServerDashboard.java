@@ -12,7 +12,7 @@ import co.edu.uptc.views.WaitingPanel;
 public class ServerDashboard extends JFrame implements ContractServerPlay.View {
 
     private ContractServerPlay.Presenter presenter;
-    private GameFrame gameFrame = new GameFrame();
+    private ServerGameFrame gameFrame = new ServerGameFrame();
     private WaitingPanel waitingPanel = new WaitingPanel(startButtonActionListener(), RoleEnum.SERVER);
 
     public ServerDashboard() {

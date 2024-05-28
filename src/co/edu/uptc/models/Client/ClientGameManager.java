@@ -1,8 +1,6 @@
 package co.edu.uptc.models.Client;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import co.edu.uptc.net.ClientManager;
 import co.edu.uptc.pojos.BallPojo;
@@ -16,7 +14,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     private ContractClientPlay.Presenter presenter;
     private ClientBallModel ballModel;
-    private List<ClientRacketModel> racketsModel;
+    private ClientRacketModel racketModel;
     private int horizontalLimit;
     private int verticalLimit;
     private ClientManager client;
@@ -33,68 +31,48 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     @Override
     public void start() {
-        presenter.beginGame();
         initModels();
-
+        loadClientPojos();
+        presenter.beginGame();
     }
 
     private void initModels() {
         initBall();
-        initRackets();
+        initRacket();
     }
 
     private void initBall() {
         ballModel = new ClientBallModel();
+        ballModel.setBoardPosition(client.getClientPojo().getBoardPosition());
     }
 
-    private void initRackets() {
-        racketsModel = new ArrayList<ClientRacketModel>();
-        racketsModel.add(initRacket());
+    private void initRacket() {
+        racketModel = new ClientRacketModel();
+        racketModel.setVerticalLimit(600 - 40);
     }
 
-    private ClientRacketModel initRacket() {
-        ClientRacketModel racketModel = new ClientRacketModel();
-        racketModel.setHorizontalLimit(horizontalLimit);
-        racketModel.setVerticalLimit(verticalLimit);
-        racketModel.setScale(1);
-        racketModel.configureRacketPojoToShow();
-        return racketModel;
-    }
-
-    @Override
-    public BallPojo getBallPojo() {
-        return ballModel.getBallPojo();
-    }
-
-    @Override
-    public List<RacketPojo> getRacketsPojo() {
-        List<RacketPojo> racketPojos = new ArrayList<RacketPojo>();
-        for (ClientRacketModel racketModel : racketsModel) {
-            racketPojos.add(racketModel.getRacketPojo());
-        }
-        return racketPojos;
-    }
-
-    @Override
-    public void setHorizontalLimit(int horizontalLimit) {
-        this.horizontalLimit = horizontalLimit;
-
-    }
-
-    @Override
-    public void setVerticalLimit(int verticalLimit) {
-        this.verticalLimit = verticalLimit;
-        if (racketsModel != null) {
-            for (ClientRacketModel racketModel : racketsModel) {
-                racketModel.setVerticalLimit(verticalLimit);
+    private void loadClientPojos() {
+        Thread loadClientPojosThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    ballModel.setBallPojo(client.getClientPojo().getBallPojo());
+                    client.setRacketPojo(racketModel.getRacketPojo());
+                    ballModel.calculateBallPosition();
+                    racketModel.calculateRacketPosition();
+                    Util.sleep(10);
+                }
             }
-        }
+        });
+        loadClientPojosThread.setName("Load Client Pojos Thread");
+        loadClientPojosThread.start();
     }
 
     @Override
-    public void racketsMovement(int keyCode) {
+    public void racketMovement(int keyCode) {
         System.out.println(KeyEvent.getKeyText(keyCode));
-        if ((racketsModel.get(0).getPosition() != null) && (racketsModel.get(0).getPosition() == DirectionEnum.LEFT)) {
+        if ((racketModel.getRacketPojo().getPosition() != null)
+                && (racketModel.getRacketPojo().getPosition() == DirectionEnum.LEFT)) {
             moveLeftRacket(keyCode);
         } else {
             moveRightRacket(keyCode);
@@ -104,10 +82,10 @@ public class ClientGameManager implements ContractClientPlay.Model {
     private void moveLeftRacket(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_W:
-                racketsModel.get(0).move(DirectionEnum.UP);
+                racketModel.move(DirectionEnum.UP);
                 break;
             case KeyEvent.VK_S:
-                racketsModel.get(0).move(DirectionEnum.DOWN);
+                racketModel.move(DirectionEnum.DOWN);
                 break;
         }
     }
@@ -115,10 +93,10 @@ public class ClientGameManager implements ContractClientPlay.Model {
     private void moveRightRacket(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                racketsModel.get(1).move(DirectionEnum.UP);
+                racketModel.move(DirectionEnum.UP);
                 break;
             case KeyEvent.VK_DOWN:
-                racketsModel.get(1).move(DirectionEnum.DOWN);
+                racketModel.move(DirectionEnum.DOWN);
                 break;
         }
     }
@@ -136,7 +114,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
         return true;
     }
 
-    private void changePlayersAmount(){
+    private void changePlayersAmount() {
         Thread changePlayersAmountThread = new Thread(new Runnable() {
 
             @Override
@@ -144,10 +122,38 @@ public class ClientGameManager implements ContractClientPlay.Model {
                 while (isWaiting) {
                     presenter.changeClientsAmount(client.getClientsAmount());
                     Util.sleep(1000);
+                    if (client != null) {
+                        if (client.isStarted()) {
+                            isWaiting = false;
+                            start();
+                        }
+                    }
                 }
             }
         });
         changePlayersAmountThread.setName("Change Players Amount Thread");
         changePlayersAmountThread.start();
     }
+
+    @Override
+    public RacketPojo getRacketPojoToDraw() {
+        return racketModel.getRacketPojoToDraw();
+    }
+
+    @Override
+    public BallPojo getBallPojoToDraw() {
+        return ballModel.getBallPojoToDraw();
+    }
+
+    @Override
+    public void setHorizontalLimit(int horizontalLimit) {
+        this.horizontalLimit = horizontalLimit;
+
+    }
+
+    @Override
+    public void setVerticalLimit(int verticalLimit) {
+        this.verticalLimit = verticalLimit;
+    }
+
 }
