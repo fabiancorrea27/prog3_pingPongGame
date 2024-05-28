@@ -1,4 +1,4 @@
-package co.edu.uptc.views;
+package co.edu.uptc.views.Server;
 
 import java.awt.Graphics;
 import java.awt.event.ComponentAdapter;
@@ -16,9 +16,9 @@ public class GamePanel extends JPanel {
     private boolean running;
     private BallPojo ball;
     private List<RacketPojo> rackets;
-    private Dashboard dashboard;
+    private GameFrame dashboard;
 
-    public GamePanel(Dashboard dashboard) {
+    public GamePanel(GameFrame dashboard) {
         this.dashboard = dashboard;
         this.putComponentListener();
     }

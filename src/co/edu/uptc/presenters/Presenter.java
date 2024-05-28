@@ -7,9 +7,9 @@ import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.presenters.ContractPlay.Model;
 import co.edu.uptc.presenters.ContractPlay.View;
-import co.edu.uptc.views.Dashboard;
+import co.edu.uptc.views.Server.ServerDashboard;
 
-public class Presenter implements ContractPlay.Presenter{
+public class Presenter implements ContractPlay.Presenter {
 
     private ContractPlay.Model model;
     private ContractPlay.View view;
@@ -26,16 +26,19 @@ public class Presenter implements ContractPlay.Presenter{
 
     @Override
     public void begin() {
-        makeMVP();
         view.begin();
         model.start();
     }
 
     @Override
-    public void makeMVP() {
-        Dashboard dashboard = new Dashboard();
-        dashboard.setPresenter(this);
-        setView(dashboard);
+    public void makeMVP(String role) {
+        if (role.equals("server")) {
+            ServerDashboard serverDashboard = new ServerDashboard();
+            serverDashboard.setPresenter(this);
+            setView(serverDashboard);
+        } else {
+
+        }
 
         GameManager gameManager = new GameManager();
         gameManager.setPresenter(this);
@@ -49,7 +52,7 @@ public class Presenter implements ContractPlay.Presenter{
 
     @Override
     public List<RacketPojo> getRacketsPojo() {
-       return model.getRacketsPojo();
+        return model.getRacketsPojo();
     }
 
     @Override
@@ -67,8 +70,14 @@ public class Presenter implements ContractPlay.Presenter{
         model.racketsMovement(keyCode);
     }
 
- 
+    @Override
+    public void beginGame() {
+        view.beginGame();
+    }
 
-   
+    @Override
+    public void changeClientsAmount(int clientsAmount) {
+        view.changeClientsAmount(clientsAmount);
+    }
 
 }

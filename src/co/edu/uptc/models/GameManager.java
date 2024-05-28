@@ -3,11 +3,16 @@ package co.edu.uptc.models;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import co.edu.uptc.net.Server;
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.presenters.ContractPlay;
 import co.edu.uptc.presenters.ContractPlay.Presenter;
+import co.edu.uptc.utils.DirectionEnum;
+import co.edu.uptc.utils.Util;
 
 public class GameManager implements ContractPlay.Model {
 
@@ -16,9 +21,10 @@ public class GameManager implements ContractPlay.Model {
     private List<RacketModel> racketsModel;
     private int horizontalLimit;
     private int verticalLimit;
+    private Server server;
 
     public GameManager() {
-
+        server = new Server();
     }
 
     @Override
@@ -28,8 +34,32 @@ public class GameManager implements ContractPlay.Model {
 
     @Override
     public void start() {
+        server.begin();
+        lookForGameStart();
+        presenter.beginGame();
         initModels();
         ballModel.startMovement();
+
+    }
+
+    private boolean lookForGameStart() {
+        Thread lookForGameStartThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int clientsAmount = 0;
+                // Look if the server is searching clients, if it is not, the game has started
+                while (server.isSearching()) {
+                    // Change the amount of connected clients
+                    if (server.getClients().size() != clientsAmount) {
+                        clientsAmount = server.getClients().size();
+                        presenter.changeClientsAmount(clientsAmount);
+                    }
+                    Util.sleep(100);
+                }
+            }
+        });
+        lookForGameStartThread.start();
+        return true;
     }
 
     private void initModels() {

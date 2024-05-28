@@ -1,6 +1,7 @@
 package co.edu.uptc.models;
 
 import co.edu.uptc.pojos.BallPojo;
+import co.edu.uptc.utils.DirectionEnum;
 import co.edu.uptc.utils.Util;
 
 public class BallModel {

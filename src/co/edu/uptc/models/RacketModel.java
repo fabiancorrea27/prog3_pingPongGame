@@ -1,6 +1,7 @@
 package co.edu.uptc.models;
 
 import co.edu.uptc.pojos.RacketPojo;
+import co.edu.uptc.utils.DirectionEnum;
 
 public class RacketModel {
     private RacketPojo racket;
