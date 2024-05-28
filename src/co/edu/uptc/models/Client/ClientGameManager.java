@@ -31,6 +31,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     @Override
     public void start() {
+        initLimits();
         initModels();
         loadClientPojos();
         presenter.beginGame();
@@ -49,6 +50,23 @@ public class ClientGameManager implements ContractClientPlay.Model {
     private void initRacket() {
         racketModel = new ClientRacketModel();
         racketModel.setVerticalLimit(600 - 40);
+        racketModel.setVerticalLimit(verticalLimit);
+        racketModel.setHorizontalLimit(horizontalLimit);
+        chooseRacketPosition();
+        racketModel.configureInitialPosition();
+    }
+
+    private void chooseRacketPosition() {
+        if (client.getClientPojo().getBoardPosition() == 0) {
+            racketModel.getRacketPojo().setPosition(DirectionEnum.LEFT);
+        } else if (racketModel.getRacketPojo().isAvailable()) {
+            racketModel.getRacketPojo().setPosition(DirectionEnum.RIGHT);
+        }
+    }
+
+    private void initLimits(){
+        horizontalLimit = 1000 - 16;
+        verticalLimit = 600 - 40;
     }
 
     private void loadClientPojos() {
@@ -58,9 +76,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
                 while (true) {
                     ballModel.setBallPojo(client.getClientPojo().getBallPojo());
                     client.setRacketPojo(racketModel.getRacketPojo());
-                    ballModel.calculateBallPosition();
-                    racketModel.calculateRacketPosition();
-                    Util.sleep(10);
+                    ballModel.calculateBallPojoToDrawPosition();
                 }
             }
         });
@@ -137,7 +153,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     @Override
     public RacketPojo getRacketPojoToDraw() {
-        return racketModel.getRacketPojoToDraw();
+        return racketModel.getRacketPojo();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package co.edu.uptc.views.Client;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -19,8 +20,8 @@ public class ClientGamePanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         if (ball != null) {
-            g.drawOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
-
+            
+            g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (racket != null) {
             if (racket.isAvailable()) {
@@ -45,7 +46,7 @@ public class ClientGamePanel extends JPanel {
         thread.start();
     }
 
-    public void loadObjectsPojo() {
+    public void loadObjectsPojo() {     
         this.ball = gameFrame.getPresenter().getBallPojoToDraw();
         this.racket = gameFrame.getPresenter().getRacketsPojoToDraw();
     }

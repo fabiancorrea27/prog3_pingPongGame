@@ -5,8 +5,8 @@ import co.edu.uptc.utils.DirectionEnum;
 
 public class ClientRacketModel {
     private RacketPojo racketPojo;
-    private RacketPojo racketPojoToDraw;
     private int verticalLimit;
+    private int horizontalLimit;
     private int movementSpeed;
     private int boardPosition;
 
@@ -14,9 +14,20 @@ public class ClientRacketModel {
         racketPojo = new RacketPojo();
         racketPojo.setHeight(60);
         racketPojo.setWidth(20);
-        racketPojoToDraw = new RacketPojo();
-        racketPojoToDraw.setHeight(racketPojo.getHeight());
-        racketPojoToDraw.setWidth(racketPojo.getWidth());
+
+    }
+
+    public void configureInitialPosition() {
+        racketPojo.setyCoordinate(verticalLimit / 2 - (racketPojo.getHeight() / 2));
+        configureXCoordinate();
+    }
+
+    private void configureXCoordinate() {
+        if (racketPojo.getPosition() == DirectionEnum.LEFT) {
+            racketPojo.setxCoordinate(10);
+        } else if (racketPojo.getPosition() == DirectionEnum.RIGHT) {
+            racketPojo.setxCoordinate(horizontalLimit - (racketPojo.getWidth() - 10));
+        }
     }
 
     public void move(DirectionEnum movementDirection) {
@@ -43,12 +54,6 @@ public class ClientRacketModel {
         }
     }
 
-    public void calculateRacketPosition(){
-        racketPojoToDraw.setxCoordinate(racketPojo.getxCoordinate() - ((1000 - 16) * boardPosition));
-        racketPojoToDraw.setyCoordinate(racketPojo.getyCoordinate());
-    }
-
-
     public RacketPojo getRacketPojo() {
         return racketPojo;
     }
@@ -57,8 +62,10 @@ public class ClientRacketModel {
         this.verticalLimit = verticalLimit;
     }
 
-    public RacketPojo getRacketPojoToDraw() {
-        return racketPojoToDraw;
+    public void setHorizontalLimit(int horizontalLimit) {
+        this.horizontalLimit = horizontalLimit;
     }
+
+    
 
 }

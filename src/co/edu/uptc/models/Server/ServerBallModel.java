@@ -17,7 +17,7 @@ public class ServerBallModel {
 
     public ServerBallModel() {
         ballPojo = new BallPojo();
-        movementSpeed = 5;
+        movementSpeed = 4;
         ballPojo.setSize(20);
         ballPojoToDraw = new BallPojo();
         chooseRandomDirection();
@@ -38,7 +38,7 @@ public class ServerBallModel {
             public void run() {
                 while (true) {
                     configureBallDrawScale();
-                    Util.sleep(5);
+                    Util.sleep(10);
                     move();
                 }
             }

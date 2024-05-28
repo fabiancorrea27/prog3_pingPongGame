@@ -20,7 +20,6 @@ public class ServerGamePanel extends JPanel {
 
     public ServerGamePanel(ServerGameFrame dashboard) {
         this.gameFrame = dashboard;
-        
     }
    
     // }
@@ -28,9 +27,8 @@ public class ServerGamePanel extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         if (ball != null) {
-            g.drawOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
+            g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
-
         if (rackets != null) {
             for (RacketPojo racket : rackets) {
                 g.drawRect(racket.getxCoordinate(), racket.getyCoordinate(), racket.getWidth(), racket.getHeight());

@@ -108,14 +108,28 @@ public class ServerGameManager implements ContractServerPlay.Model {
             public void run() {
                 while(true){
                     server.setBallPojo(ballModel.getBallPojo());
-                    racketsModel.get(0).setRacketPojo(server.getClients().get(0).getRacketPojo());
-                    racketsModel.get(1).setRacketPojo(server.getClients().get(1).getRacketPojo());
+                    server.sendClientsPackage();
+                    RacketPojo racketPojoAdjusted = racketPojoAdjusted(racketsModel.get(0).getRacketPojo());
+                    racketsModel.get(0).setRacketPojo(racketPojoAdjusted);
+                    racketPojoAdjusted = racketPojoAdjusted(racketsModel.get(1).getRacketPojo());
+                    racketsModel.get(1).setRacketPojo(racketPojoAdjusted);
                 }
             }
             
         });
         sendClientInformationThread.setName("Send Client Information Thread");
         sendClientInformationThread.start();
+    }
+
+    private RacketPojo racketPojoAdjusted(RacketPojo racketPojo) {
+        RacketPojo racketPojoAdjusted = new RacketPojo();
+        racketPojoAdjusted.setxCoordinate(racketPojo.getxCoordinate() + ((1000 * server.getClients().size()) - 16));
+        racketPojoAdjusted.setyCoordinate(racketPojo.getyCoordinate() );
+        racketPojoAdjusted.setAvailable(racketPojo.isAvailable());
+        racketPojoAdjusted.setPosition(racketPojo.getPosition());
+        racketPojoAdjusted.setHeight(racketPojo.getHeight());
+        racketPojoAdjusted.setWidth(racketPojo.getWidth());
+        return racketPojoAdjusted;
     }
 
     private void setLimits() {

@@ -65,14 +65,12 @@ public class ServerManager {
 
     }
 
-    private void sendClientsPackage() {
+    public void sendClientsPackage() {
         for (ClientPojo clientPojo : clients) {
             try {
                 // Send client pojo with ball pojo updated
                 clientPojo.setClientsAmount(clients.size());
-                System.out.println(ballPojo.getxCoordinate() + " " + ballPojo.getyCoordinate());
                 clientPojo.setBallPojo(ballPojo);
-            
                 clientPojo.setStarted(!isSearching);
                 Socket socket = new Socket(clientPojo.getIpAddress(), 9002);
                 ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());

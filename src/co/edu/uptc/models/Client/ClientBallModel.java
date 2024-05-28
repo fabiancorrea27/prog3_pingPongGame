@@ -15,11 +15,11 @@ public class ClientBallModel {
         ballPojo.setSize(ballPojo.getSize());
     }
 
-    public void calculateBallPosition() {
-
+    public void calculateBallPojoToDrawPosition() {
         ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate() - ((1000 - 16) * boardPosition));
         ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
-
+        ballPojoToDraw.setSize(ballPojo.getSize());
+        System.out.println(ballPojoToDraw.getxCoordinate() + " " + ballPojoToDraw.getyCoordinate());
     }
 
     public BallPojo getBallPojo() {
