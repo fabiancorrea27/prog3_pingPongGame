@@ -110,10 +110,6 @@ public class ServerGameManager implements ContractServerPlay.Model {
             @Override
             public void run() {
                 while (true) {
-                    Util.sleep(100);
-                    System.out.println(
-                            "Server: " + "X: " + (ballModel.getBallPojo().getxCoordinate() - (horizontalLimit / 2))
-                                    + " Y: " + (ballModel.getBallPojo().getyCoordinate()));
                     server.setBallPojo(ballModel.getBallPojo());
                     server.sendClientsPackage();
                     for (int i = 0; i < server.getClients().size(); i++) {

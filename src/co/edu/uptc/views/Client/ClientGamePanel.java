@@ -1,5 +1,6 @@
 package co.edu.uptc.views.Client;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -18,12 +19,14 @@ public class ClientGamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        g.setColor(Color.BLUE);
         if (ball != null) {        
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (racket != null) {
+            g.setColor(Color.MAGENTA);
             if (racket.isAvailable()) {
-                g.drawRect(racket.getxCoordinate(), racket.getyCoordinate(), racket.getWidth(), racket.getHeight());
+                g.fillRect(racket.getxCoordinate(), racket.getyCoordinate(), racket.getWidth(), racket.getHeight());
             }
         }
     }

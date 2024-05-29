@@ -1,5 +1,6 @@
 package co.edu.uptc.views.Server;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.List;
 
@@ -29,11 +30,13 @@ public class ServerGamePanel extends JPanel {
         g.drawLine(0, boardHeight / 2, boardWidth, boardHeight / 2);
         g.drawLine(boardWidth / 2, 0, boardWidth / 2, boardHeight);
         if (ball != null) {
+            g.setColor(Color.BLUE);
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (rackets != null) {
+            g.setColor(Color.MAGENTA);
             for (RacketPojo racket : rackets) {
-                g.drawRect(racket.getxCoordinate(), racket.getyCoordinate(), racket.getWidth(), racket.getHeight());
+                g.fillRect(racket.getxCoordinate(), racket.getyCoordinate(), racket.getWidth(), racket.getHeight());
             }
         }
     }
