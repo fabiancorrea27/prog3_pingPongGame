@@ -27,6 +27,7 @@ public class ServerGamePanel extends JPanel {
         int boardWidth = gameFrame.getPresenter().getAdjustedHorizontalLimit();
         int boardHeight = gameFrame.getPresenter().getAdjustedVerticalLimit();
         g.drawLine(0, boardHeight / 2, boardWidth, boardHeight / 2);
+        g.drawLine(boardWidth / 2, 0, boardWidth / 2, boardHeight);
         if (ball != null) {
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }

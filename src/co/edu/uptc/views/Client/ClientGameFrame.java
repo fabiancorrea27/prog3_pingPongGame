@@ -37,7 +37,6 @@ public class ClientGameFrame extends JFrame {
 
     public void begin() {
         this.setVisible(true);
-        System.out.println(getInsets());
         gamePanel.begin();
     }
 

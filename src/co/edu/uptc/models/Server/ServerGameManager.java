@@ -137,7 +137,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
 
     private void setLimits() {
         this.horizontalLimit = server.getClients().size()
-                * (Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - (16 * server.getClients().size()));
+                * (Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - 16);
         this.verticalLimit = Integer.parseInt(PropertiesReader.getProperty("windowHeight")) - 40;
     }
 

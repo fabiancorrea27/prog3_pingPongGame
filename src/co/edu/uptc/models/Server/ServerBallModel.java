@@ -1,7 +1,6 @@
 package co.edu.uptc.models.Server;
 
 import co.edu.uptc.pojos.BallPojo;
-import co.edu.uptc.utils.DirectionEnum;
 import co.edu.uptc.utils.Util;
 
 public class ServerBallModel {
@@ -9,26 +8,24 @@ public class ServerBallModel {
     private BallPojo ballPojo;
     private BallPojo ballPojoToDraw;
     private int movementSpeed;
-    private DirectionEnum movementDirection;
     private int horizontalLimit;
     private int verticalLimit;
     private double horizontalDrawScale;
     private double verticalDrawScale;
+    private double angle;
 
     public ServerBallModel() {
         ballPojo = new BallPojo();
-        movementSpeed = 4;
+        movementSpeed = 5;
         ballPojo.setSize(20);
         ballPojoToDraw = new BallPojo();
-        chooseRandomDirection();
+        chooseRandomAngle();
     }
 
-    private void chooseRandomDirection(){
-        int randomNumber = (int) (Math.random() * 2);
-        if(randomNumber == 0){
-            this.movementDirection = DirectionEnum.RIGHT;
-        } else {
-            this.movementDirection = DirectionEnum.LEFT;
+    private void chooseRandomAngle() {
+        angle = (Math.random() * (2 * Math.PI));
+        if ((angle > 4.5 && angle < 4.9) || (angle > 1.4 && angle < 1.8)) {
+            chooseRandomAngle();
         }
     }
 
@@ -38,7 +35,7 @@ public class ServerBallModel {
             public void run() {
                 while (true) {
                     configureBallDrawScale();
-                    Util.sleep(10);
+                    Util.sleep(40);
                     move();
                 }
             }
@@ -48,29 +45,41 @@ public class ServerBallModel {
     }
 
     private void move() {
-        if (movementDirection == DirectionEnum.RIGHT) {
-            moveRight();
-        } else if (movementDirection == DirectionEnum.LEFT) {
-            moveLeft();
+        moveXCoordinate();
+        moveYCoordinate();
+    }
+
+    private void moveYCoordinate() {
+        ballPojo.setyCoordinate(ballPojo.getyCoordinate() + ((int) (movementSpeed * Math.sin(angle))));
+        if (((ballPojo.getyCoordinate() + ballPojo.getSize()) >= verticalLimit)
+                || (ballPojo.getyCoordinate() <= 0)) {
+            angle = -angle;
         }
     }
 
-    private void moveRight() {
-        if ((ballPojo.getxCoordinate() + ballPojo.getSize()) < horizontalLimit) {
-            ballPojo.setxCoordinate(ballPojo.getxCoordinate() + movementSpeed);
-        } else {
+    private void moveXCoordinate() {
+        ballPojo.setxCoordinate(ballPojo.getxCoordinate() + ((int) (movementSpeed * Math.cos(angle))));
+
+        checkCollisionLeft();
+        checkCollisionRight();
+    }
+
+    private void checkCollisionRight() {
+        if ((ballPojo.getxCoordinate() + ballPojo.getSize()) > (horizontalLimit - movementSpeed)) {
+            System.out.println(ballPojo.getxCoordinate() + " horizonal limit: " + horizontalLimit);
             ballPojo.setxCoordinate(horizontalLimit - ballPojo.getSize());
-            this.movementDirection = DirectionEnum.LEFT;
+            configurePosition();
+            chooseRandomAngle();
         }
     }
 
-    private void moveLeft() {
-        if (ballPojo.getxCoordinate() > 0) {
-            ballPojo.setxCoordinate(ballPojo.getxCoordinate() - movementSpeed);
-        } else {
+    private void checkCollisionLeft() {
+        if (ballPojo.getxCoordinate() <= 0) {
             ballPojo.setxCoordinate(0);
-            this.movementDirection = DirectionEnum.RIGHT;
+            configurePosition();
+            chooseRandomAngle();
         }
+
     }
 
     private void configureBallDrawScale() {
@@ -80,15 +89,15 @@ public class ServerBallModel {
         ballPojoToDraw.setSize((int) (verticalDrawScale * ballPojo.getSize()));
     }
 
-    private void copyValuesToBallPojoToDraw(){
+    private void copyValuesToBallPojoToDraw() {
         ballPojoToDraw.setSize(ballPojo.getSize());
         ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate());
         ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
     }
 
-    public void configurePosition(){
+    public void configurePosition() {
         ballPojo.setxCoordinate(horizontalLimit / 2 - ballPojo.getSize() / 2);
-       ballPojo.setyCoordinate(verticalLimit / 2 - ballPojo.getSize() / 2);
+        ballPojo.setyCoordinate(verticalLimit / 2 - ballPojo.getSize() / 2);
     }
 
     public BallPojo getBallPojo() {
@@ -114,6 +123,5 @@ public class ServerBallModel {
     public void setVerticalDrawScale(double verticalDrawScale) {
         this.verticalDrawScale = verticalDrawScale;
     }
-    
-    
+
 }

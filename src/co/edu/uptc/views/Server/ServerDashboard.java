@@ -39,13 +39,13 @@ public class ServerDashboard extends JFrame implements ContractServerPlay.View {
 
     private ActionListener startButtonActionListener() {
         return e -> {
-            // if (presenter.checkMinClientsAmount()) {
+            if (presenter.checkMinClientsAmount()) {
                 this.dispose();
                 presenter.beginGame();
                 beginGame();
-            // } else {
-            //     waitingPanel.changeFailStatus("Debe haber minimo dos jugadores");
-            // }
+            } else {
+                waitingPanel.changeFailStatus("Debe haber minimo dos jugadores");
+            }
         };
     }
 

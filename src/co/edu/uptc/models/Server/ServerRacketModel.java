@@ -2,7 +2,6 @@ package co.edu.uptc.models.Server;
 
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.utils.DirectionEnum;
-import co.edu.uptc.utils.PropertiesReader;
 
 public class ServerRacketModel {
     private RacketPojo racketPojo;
