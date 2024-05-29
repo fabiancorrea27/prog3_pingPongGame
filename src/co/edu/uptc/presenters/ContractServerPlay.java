@@ -1,5 +1,6 @@
 package co.edu.uptc.presenters;
 
+import java.awt.Color;
 import java.util.List;
 
 import co.edu.uptc.pojos.BallPojo;
@@ -16,14 +17,14 @@ public interface ContractServerPlay {
         public boolean checkMinClientsAmount();
         public int getAdjustedHorizontalLimit();
         public int getAdjustedVerticalLimit();
+        public void setBallColor(Color color);
     }
 
     public interface View {
         public void setPresenter(Presenter presenter);
         public void begin();
         public void beginGame();
-        public void changeClientsAmount(int clientsAmount);
-       
+        public void changeClientsAmount(int clientsAmount);       
     }
 
     public interface Presenter {
@@ -32,16 +33,14 @@ public interface ContractServerPlay {
         public void makeMVP();
         public void begin();
 
-        // view
         public void beginGame();
         public void changeClientsAmount(int clientsAmount);
         
-        
-        // model
         public BallPojo getBallPojoToDraw();
         public List<RacketPojo> getRacketsPojoToDraw();
         public boolean checkMinClientsAmount();
         public int getAdjustedHorizontalLimit();
         public int getAdjustedVerticalLimit();
+        public void setBallColor(Color color);
     }
 }

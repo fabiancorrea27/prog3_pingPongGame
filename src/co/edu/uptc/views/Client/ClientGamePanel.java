@@ -19,8 +19,8 @@ public class ClientGamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        g.setColor(Color.BLUE);
         if (ball != null) {        
+            g.setColor(ball.getColor());
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (racket != null) {

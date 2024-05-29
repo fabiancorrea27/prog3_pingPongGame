@@ -30,11 +30,9 @@ public interface ContractClientPlay {
         public void makeMVP();
         public void begin();
 
-        // view
         public void beginGame();
         public void changeClientsAmount(int clientsAmount);
         
-        // model
         public BallPojo getBallPojoToDraw();
         public RacketPojo getRacketsPojoToDraw();
         public void racketMovement(int keyCode);

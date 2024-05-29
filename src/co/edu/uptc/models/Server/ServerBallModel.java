@@ -26,7 +26,7 @@ public class ServerBallModel {
 
     private void chooseRandomAngle() {
         angle = (Math.random() * (2 * Math.PI));
-        if ((angle > 4.5 && angle < 4.9) || (angle > 1.4 && angle < 1.8)) {
+        if ((angle > 4.3 && angle < 5.1) || (angle > 1.2 && angle < 2.0)) {
             chooseRandomAngle();
         }
     }
@@ -94,6 +94,7 @@ public class ServerBallModel {
         ballPojoToDraw.setSize(ballPojo.getSize());
         ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate());
         ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
+        ballPojoToDraw.setColor(ballPojo.getColor());
     }
 
     public void configurePosition() {

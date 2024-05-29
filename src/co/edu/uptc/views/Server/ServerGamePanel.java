@@ -20,8 +20,7 @@ public class ServerGamePanel extends JPanel {
     public ServerGamePanel(ServerGameFrame dashboard) {
         this.gameFrame = dashboard;
     }
-
-    // }
+    
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -30,7 +29,7 @@ public class ServerGamePanel extends JPanel {
         g.drawLine(0, boardHeight / 2, boardWidth, boardHeight / 2);
         g.drawLine(boardWidth / 2, 0, boardWidth / 2, boardHeight);
         if (ball != null) {
-            g.setColor(Color.BLUE);
+            g.setColor(ball.getColor());
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (rackets != null) {

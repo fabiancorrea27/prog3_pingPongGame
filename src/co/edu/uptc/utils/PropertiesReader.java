@@ -12,7 +12,6 @@ public class PropertiesReader {
             properties.load(new FileInputStream("resources\\PropertiesGame.properties"));
             value = properties.getProperty(key);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return value;

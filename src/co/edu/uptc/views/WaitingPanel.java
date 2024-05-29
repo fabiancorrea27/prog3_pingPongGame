@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -18,9 +19,10 @@ import co.edu.uptc.views.CustomComponents.WaitingLabel;
 public class WaitingPanel extends JPanel {
 
     private JLabel lblWait, lblPlayers, lblPlayersAmount, lblStatus;
-    private JButton btnStart;
+    private JButton btnStart, btnColor;
     private RoleEnum role;
     private int waitingMessageIndex = 0;
+    private Color colorSelected;
 
     public WaitingPanel(ActionListener actionListener, RoleEnum role) {
         this.setLayout(new GridBagLayout());
@@ -39,6 +41,7 @@ public class WaitingPanel extends JPanel {
         lblPlayersAmount = new WaitingLabel("0");
         lblStatus = new JLabel("", JLabel.CENTER);
         createStartButton(actionListener);
+        createColorButton();
     }
 
     private void addComponents() {
@@ -55,12 +58,20 @@ public class WaitingPanel extends JPanel {
         if (role == RoleEnum.SERVER) {
             this.add(btnStart, gbc);
             this.add(lblStatus, gbc);
+            this.add(btnColor, gbc);
         }
     }
 
     private void createStartButton(ActionListener actionListener) {
         btnStart = new JButton("Iniciar");
         btnStart.addActionListener(actionListener);
+    }
+
+    private void createColorButton(){
+        btnColor = new JButton("Elegir color");
+        btnColor.addActionListener(e -> {
+            colorSelected = JColorChooser.showDialog(null, "Elegir color", Color.BLUE);
+        });
     }
 
     private void waitingAnimation() {
@@ -84,5 +95,9 @@ public class WaitingPanel extends JPanel {
     public void changeFailStatus(String status) {
         lblStatus.setText(status);
         lblStatus.setForeground(Color.RED);
+    }
+
+    public Color getColorSelected() {
+        return colorSelected;
     }
 }

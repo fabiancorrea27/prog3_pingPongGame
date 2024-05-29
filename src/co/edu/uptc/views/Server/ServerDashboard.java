@@ -53,6 +53,7 @@ public class ServerDashboard extends JFrame implements ContractServerPlay.View {
     @Override
     public void beginGame() {
         gameFrame.begin();
+        presenter.setBallColor(waitingPanel.getColorSelected());
     }
 
     @Override

@@ -23,6 +23,7 @@ public class ClientBallModel {
         ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate() - (windowWidth  - 16)* boardPosition);
         ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
         ballPojoToDraw.setSize(ballPojo.getSize());
+        ballPojoToDraw.setColor(ballPojo.getColor());
         Util.sleep(100);
     }
 

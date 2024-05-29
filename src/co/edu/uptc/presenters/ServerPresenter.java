@@ -1,5 +1,6 @@
 package co.edu.uptc.presenters;
 
+import java.awt.Color;
 import java.util.List;
 
 import co.edu.uptc.models.Server.ServerGameManager;
@@ -79,4 +80,10 @@ public class ServerPresenter implements ContractServerPlay.Presenter {
     public int getAdjustedVerticalLimit() {
         return model.getAdjustedVerticalLimit();
     }
+
+    @Override
+    public void setBallColor(Color color) {
+       model.setBallColor(color);
+    }
+
 }

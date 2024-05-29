@@ -70,7 +70,6 @@ public class ServerManager {
     public void sendClientsPackage() {
         for (ClientPojo clientPojo : clients) {
             try {
-                // Send client pojo with ball pojo updated
                 clientPojo.setClientsAmount(clients.size());
                 clientPojo.setBallPojo(ballPojo);
                 clientPojo.setStarted(!isSearching);
@@ -78,7 +77,6 @@ public class ServerManager {
                 ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                 output.writeObject(clientPojo);
 
-                // Received client pojo with racket pojo updated
                 ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
                 ClientPojo client = (ClientPojo) input.readObject();
                 clientPojo.setRacketPojo(client.getRacketPojo());
@@ -93,7 +91,7 @@ public class ServerManager {
         isSearching = false;
         clients.get(0).setBoardPosition(0);
         clients.get(1).setBoardPosition(clients.size() - 1);
-        for (int i = 2; i < clients.size() - 1; i++) {
+        for (int i = 2; i < clients.size(); i++) {
             clients.get(i).setBoardPosition(i - 1);
         }
         sendClientsPackage();

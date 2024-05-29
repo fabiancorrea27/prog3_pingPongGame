@@ -6,6 +6,7 @@
  - Java JDK 17 o superior 
  - Windows 7 o superior
  - Conexión a internet
+ - Desactivar firewall
  
 ## Instrucciones de uso
 - Primero se debe que iniciar el servidor,  para esto se debe que ejecutar el archivo .jar con el parámetro de 'server'
@@ -26,6 +27,9 @@
     - velocidad de la bola y raquetas.
 - Los botones para mover las raquetas son las flechas de arriba y abajo.
 
+## Cambios
+- Conexión de más de 2 clientes arreglado
+- Menu para cambiar el color de la bola
 
 ## Autor
 - Fabian Leonardo Correa Rojas

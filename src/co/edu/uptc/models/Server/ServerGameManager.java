@@ -1,5 +1,6 @@
 package co.edu.uptc.models.Server;
 
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,9 +46,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
             @Override
             public void run() {
                 int clientsAmount = 0;
-                // Look if the server is searching clients, if it is not, the game has started
                 while (server.isSearching()) {
-                    // Change the amount of connected clients
                     if (server.getClients().size() != clientsAmount) {
                         clientsAmount = server.getClients().size();
                         presenter.changeClientsAmount(clientsAmount);
@@ -112,7 +111,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
                 while (true) {
                     server.setBallPojo(ballModel.getBallPojo());
                     server.sendClientsPackage();
-                    for (int i = 0; i < server.getClients().size(); i++) {
+                    for (int i = 0; i < 2; i++) {
                         if (server.getClients().get(i).getRacketPojo().isAvailable()) {
                             configureRacketXCoordinate(server.getClients().get(i));
                             racketsModel.get(i).setRacketPojo(server.getClients().get(i).getRacketPojo());
@@ -128,8 +127,6 @@ public class ServerGameManager implements ContractServerPlay.Model {
     }
 
     private void configureRacketXCoordinate(ClientPojo clientPojo) {
-        // Look if it is the racket of the right player and adjust x coordinate to the
-        // right of the viewport
         if (clientPojo.getRacketPojo().getPosition() == DirectionEnum.RIGHT) {
             clientPojo.getRacketPojo()
                     .setxCoordinate(clientPojo.getRacketPojo().getxCoordinate()
@@ -208,5 +205,10 @@ public class ServerGameManager implements ContractServerPlay.Model {
     @Override
     public boolean checkMinClientsAmount() {
         return server.getClients().size() >= 2;
+    }
+
+    @Override
+    public void setBallColor(Color color) {
+       ballModel.getBallPojo().setColor(color);
     }
 }
