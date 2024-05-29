@@ -1,8 +1,6 @@
 package co.edu.uptc.views.Server;
 
 import java.awt.Graphics;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.util.List;
 
 import javax.swing.JPanel;

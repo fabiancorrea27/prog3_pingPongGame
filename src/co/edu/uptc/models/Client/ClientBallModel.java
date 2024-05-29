@@ -1,6 +1,7 @@
 package co.edu.uptc.models.Client;
 
 import co.edu.uptc.pojos.BallPojo;
+import co.edu.uptc.utils.PropertiesReader;
 
 public class ClientBallModel {
 
@@ -16,10 +17,10 @@ public class ClientBallModel {
     }
 
     public void calculateBallPojoToDrawPosition() {
-        ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate() - ((1000 - 16) * boardPosition));
+        int windowWidth = Integer.parseInt(PropertiesReader.getProperty("windowWidth"));
+        ballPojoToDraw.setxCoordinate(ballPojo.getxCoordinate() - ((windowWidth - 16)* boardPosition));
         ballPojoToDraw.setyCoordinate(ballPojo.getyCoordinate());
         ballPojoToDraw.setSize(ballPojo.getSize());
-        System.out.println(ballPojoToDraw.getxCoordinate() + " " + ballPojoToDraw.getyCoordinate());
     }
 
     public BallPojo getBallPojo() {

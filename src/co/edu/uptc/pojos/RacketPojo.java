@@ -48,6 +48,11 @@ public class RacketPojo implements Serializable {
     public void setPosition(DirectionEnum position) {
         this.position = position;
     }
+    @Override
+    public String toString() {
+        return "RacketPojo [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + ", height=" + height
+                + ", width=" + width + ", isAvailable=" + isAvailable + ", position=" + position + "]";
+    }
 
     
    

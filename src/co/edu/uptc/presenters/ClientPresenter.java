@@ -1,7 +1,5 @@
 package co.edu.uptc.presenters;
 
-import java.util.List;
-
 import co.edu.uptc.models.Client.ClientGameManager;
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.RacketPojo;

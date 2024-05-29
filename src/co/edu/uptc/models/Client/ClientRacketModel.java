@@ -26,7 +26,7 @@ public class ClientRacketModel {
         if (racketPojo.getPosition() == DirectionEnum.LEFT) {
             racketPojo.setxCoordinate(10);
         } else if (racketPojo.getPosition() == DirectionEnum.RIGHT) {
-            racketPojo.setxCoordinate(horizontalLimit - (racketPojo.getWidth() - 10));
+            racketPojo.setxCoordinate(horizontalLimit - (racketPojo.getWidth() + 10));
         }
     }
 

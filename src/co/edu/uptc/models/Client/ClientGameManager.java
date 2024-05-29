@@ -8,6 +8,7 @@ import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.presenters.ContractClientPlay;
 import co.edu.uptc.presenters.ContractClientPlay.Presenter;
 import co.edu.uptc.utils.DirectionEnum;
+import co.edu.uptc.utils.PropertiesReader;
 import co.edu.uptc.utils.Util;
 
 public class ClientGameManager implements ContractClientPlay.Model {
@@ -49,7 +50,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     private void initRacket() {
         racketModel = new ClientRacketModel();
-        racketModel.setVerticalLimit(600 - 40);
+        int windowHeight = Integer.parseInt(PropertiesReader.getProperty("windowHeight"));
         racketModel.setVerticalLimit(verticalLimit);
         racketModel.setHorizontalLimit(horizontalLimit);
         chooseRacketPosition();
@@ -59,14 +60,16 @@ public class ClientGameManager implements ContractClientPlay.Model {
     private void chooseRacketPosition() {
         if (client.getClientPojo().getBoardPosition() == 0) {
             racketModel.getRacketPojo().setPosition(DirectionEnum.LEFT);
-        } else if (racketModel.getRacketPojo().isAvailable()) {
+            racketModel.getRacketPojo().setAvailable(true);
+        } else if (client.getClientPojo().getBoardPosition() == (client.getClientsAmount() - 1)) {
             racketModel.getRacketPojo().setPosition(DirectionEnum.RIGHT);
+            racketModel.getRacketPojo().setAvailable(true);
         }
     }
 
     private void initLimits(){
-        horizontalLimit = 1000 - 16;
-        verticalLimit = 600 - 40;
+        horizontalLimit = Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - 16;
+        verticalLimit = Integer.parseInt(PropertiesReader.getProperty("windowHeight")) - 40;
     }
 
     private void loadClientPojos() {

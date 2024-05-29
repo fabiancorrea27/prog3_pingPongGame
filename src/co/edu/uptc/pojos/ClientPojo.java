@@ -66,6 +66,13 @@ public class ClientPojo implements Serializable {
 
     public void setStarted(boolean start) {
         this.isStarted = start;
+    }
+
+    @Override
+    public String toString() {
+        return "ClientPojo [ipAddress=" + ipAddress + ", clientsAmount=" + clientsAmount + ", isPlayer=" + isPlayer
+                + ", racketPojo=" + racketPojo + ", ballPojo=" + ballPojo + ", boardPosition=" + boardPosition
+                + ", isStarted=" + isStarted + "]";
     }   
 
 }

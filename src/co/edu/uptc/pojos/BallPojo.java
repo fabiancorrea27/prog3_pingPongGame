@@ -24,6 +24,10 @@ public class BallPojo implements Serializable {
     }
     public void setSize(int size) {
         this.size = size;
+    }
+    @Override
+    public String toString() {
+        return "BallPojo [xCoordinate=" + xCoordinate + ", yCoordinate=" + yCoordinate + ", size=" + size + "]";
     }    
 
     

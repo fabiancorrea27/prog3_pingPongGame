@@ -3,6 +3,7 @@ package co.edu.uptc.views.Client;
 import javax.swing.JFrame;
 
 import co.edu.uptc.presenters.ContractClientPlay;
+import co.edu.uptc.utils.PropertiesReader;
 
 public class ClientGameFrame extends JFrame {
 
@@ -10,7 +11,9 @@ public class ClientGameFrame extends JFrame {
     private ClientGamePanel gamePanel;
 
     public ClientGameFrame() {
-        this.setSize(1000, 600);
+        int windowWidth = Integer.parseInt(PropertiesReader.getProperty("windowWidth"));
+        int windowHeight = Integer.parseInt(PropertiesReader.getProperty("windowHeight"));
+        this.setSize(windowWidth, windowHeight);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);

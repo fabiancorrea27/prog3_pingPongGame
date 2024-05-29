@@ -10,6 +10,7 @@ import java.util.List;
 
 import co.edu.uptc.pojos.BallPojo;
 import co.edu.uptc.pojos.ClientPojo;
+import co.edu.uptc.pojos.RacketPojo;
 
 public class ServerManager {
 
@@ -53,6 +54,7 @@ public class ServerManager {
             try {
                 socketClient = serverSocket.accept();
                 ClientPojo client = new ClientPojo();
+                client.setRacketPojo(new RacketPojo());
                 client.setIpAddress(socketClient.getInetAddress().getHostAddress());
                 clients.add(client);
                 sendClientsPackage();
@@ -89,8 +91,6 @@ public class ServerManager {
 
     public void beginEvents() {
         isSearching = false;
-        clients.get(0).setPlayer(true);
-        clients.get(1).setPlayer(true);
         clients.get(0).setBoardPosition(0);
         clients.get(1).setBoardPosition(clients.size() - 1);
         for (int i = 2; i < clients.size() - 1; i++) {

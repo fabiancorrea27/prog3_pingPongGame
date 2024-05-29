@@ -10,6 +10,7 @@ import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.presenters.ContractServerPlay;
 import co.edu.uptc.presenters.ContractServerPlay.Presenter;
 import co.edu.uptc.utils.DirectionEnum;
+import co.edu.uptc.utils.PropertiesReader;
 import co.edu.uptc.utils.Util;
 
 public class ServerGameManager implements ContractServerPlay.Model {
@@ -106,7 +107,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
 
             @Override
             public void run() {
-                while(true){
+                while (true) {
                     server.setBallPojo(ballModel.getBallPojo());
                     server.sendClientsPackage();
                     RacketPojo racketPojoAdjusted = racketPojoAdjusted(racketsModel.get(0).getRacketPojo());
@@ -115,7 +116,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
                     racketsModel.get(1).setRacketPojo(racketPojoAdjusted);
                 }
             }
-            
+
         });
         sendClientInformationThread.setName("Send Client Information Thread");
         sendClientInformationThread.start();
@@ -123,8 +124,9 @@ public class ServerGameManager implements ContractServerPlay.Model {
 
     private RacketPojo racketPojoAdjusted(RacketPojo racketPojo) {
         RacketPojo racketPojoAdjusted = new RacketPojo();
-        racketPojoAdjusted.setxCoordinate(racketPojo.getxCoordinate() + ((1000 * server.getClients().size()) - 16));
-        racketPojoAdjusted.setyCoordinate(racketPojo.getyCoordinate() );
+        racketPojoAdjusted.setxCoordinate(racketPojo.getxCoordinate()
+                + ((Integer.parseInt(PropertiesReader.getProperty("windowWidth")) * server.getClients().size()) - 16));
+        racketPojoAdjusted.setyCoordinate(racketPojo.getyCoordinate());
         racketPojoAdjusted.setAvailable(racketPojo.isAvailable());
         racketPojoAdjusted.setPosition(racketPojo.getPosition());
         racketPojoAdjusted.setHeight(racketPojo.getHeight());
@@ -133,13 +135,16 @@ public class ServerGameManager implements ContractServerPlay.Model {
     }
 
     private void setLimits() {
-        this.horizontalLimit = server.getClients().size() * (1000 - 16);
-        this.verticalLimit = 600 - 40;
+        this.horizontalLimit = server.getClients().size()
+                * (Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - 16);
+        this.verticalLimit = Integer.parseInt(PropertiesReader.getProperty("windowHeight")) - 40;
     }
 
     private void calculateDrawScale() {
-        horizontalDrawScale = (1000.0 - 16.0) / horizontalLimit;
-        verticalDrawScale = (600.0 - 40.0) / verticalLimit;
+        double windowHeight = Double.parseDouble(PropertiesReader.getProperty("windowHeight"));
+        double windowWidth = Double.parseDouble(PropertiesReader.getProperty("windowWidth"));
+        horizontalDrawScale = (windowWidth - 16.0) / horizontalLimit;
+        verticalDrawScale = (windowHeight - 40.0) / verticalLimit;
     }
 
     @Override

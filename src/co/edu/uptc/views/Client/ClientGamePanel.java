@@ -1,6 +1,5 @@
 package co.edu.uptc.views.Client;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
