@@ -37,7 +37,7 @@ public interface ContractClientPlay {
         // model
         public BallPojo getBallPojoToDraw();
         public RacketPojo getRacketsPojoToDraw();
-        public void racketsMovement(int keyCode);
+        public void racketMovement(int keyCode);
         public boolean checkServerIp(String ipAdress);
     }
 }

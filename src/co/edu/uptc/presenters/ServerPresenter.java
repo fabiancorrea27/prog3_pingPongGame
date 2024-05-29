@@ -70,4 +70,14 @@ public class ServerPresenter implements ContractServerPlay.Presenter {
         return model.checkMinClientsAmount();
     }
 
+    @Override
+    public int getAdjustedHorizontalLimit() {
+        return model.getAdjustedHorizontalLimit();
+    }
+
+    @Override
+    public int getAdjustedVerticalLimit() {
+        return model.getAdjustedVerticalLimit();
+    }
+
 }

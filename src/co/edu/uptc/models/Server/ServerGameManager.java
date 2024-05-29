@@ -1,11 +1,11 @@
 package co.edu.uptc.models.Server;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.edu.uptc.net.ServerManager;
 import co.edu.uptc.pojos.BallPojo;
+import co.edu.uptc.pojos.ClientPojo;
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.presenters.ContractServerPlay;
 import co.edu.uptc.presenters.ContractServerPlay.Presenter;
@@ -110,10 +110,13 @@ public class ServerGameManager implements ContractServerPlay.Model {
                 while (true) {
                     server.setBallPojo(ballModel.getBallPojo());
                     server.sendClientsPackage();
-                    RacketPojo racketPojoAdjusted = racketPojoAdjusted(racketsModel.get(0).getRacketPojo());
-                    racketsModel.get(0).setRacketPojo(racketPojoAdjusted);
-                    racketPojoAdjusted = racketPojoAdjusted(racketsModel.get(1).getRacketPojo());
-                    racketsModel.get(1).setRacketPojo(racketPojoAdjusted);
+                    for (int i = 0; i < server.getClients().size(); i++) {
+                        if (server.getClients().get(i).getRacketPojo().isAvailable()) {
+                            configureRacketXCoordinate(server.getClients().get(i));
+                            racketsModel.get(i).setRacketPojo(server.getClients().get(i).getRacketPojo());
+                            racketsModel.get(i).calculateRacketDrawScale();
+                        }
+                    }
                 }
             }
 
@@ -122,21 +125,19 @@ public class ServerGameManager implements ContractServerPlay.Model {
         sendClientInformationThread.start();
     }
 
-    private RacketPojo racketPojoAdjusted(RacketPojo racketPojo) {
-        RacketPojo racketPojoAdjusted = new RacketPojo();
-        racketPojoAdjusted.setxCoordinate(racketPojo.getxCoordinate()
-                + ((Integer.parseInt(PropertiesReader.getProperty("windowWidth")) * server.getClients().size()) - 16));
-        racketPojoAdjusted.setyCoordinate(racketPojo.getyCoordinate());
-        racketPojoAdjusted.setAvailable(racketPojo.isAvailable());
-        racketPojoAdjusted.setPosition(racketPojo.getPosition());
-        racketPojoAdjusted.setHeight(racketPojo.getHeight());
-        racketPojoAdjusted.setWidth(racketPojo.getWidth());
-        return racketPojoAdjusted;
+    private void configureRacketXCoordinate(ClientPojo clientPojo) {
+        // Look if it is the racket of the right player and adjust x coordinate to the
+        // right of the viewport
+        if (clientPojo.getRacketPojo().getPosition() == DirectionEnum.RIGHT) {
+            clientPojo.getRacketPojo()
+                    .setxCoordinate(clientPojo.getRacketPojo().getxCoordinate()
+                            * server.getClients().size());
+        }
     }
 
     private void setLimits() {
         this.horizontalLimit = server.getClients().size()
-                * (Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - 16);
+                * (Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - (16 * server.getClients().size()));
         this.verticalLimit = Integer.parseInt(PropertiesReader.getProperty("windowHeight")) - 40;
     }
 
@@ -145,6 +146,16 @@ public class ServerGameManager implements ContractServerPlay.Model {
         double windowWidth = Double.parseDouble(PropertiesReader.getProperty("windowWidth"));
         horizontalDrawScale = (windowWidth - 16.0) / horizontalLimit;
         verticalDrawScale = (windowHeight - 40.0) / verticalLimit;
+    }
+
+    @Override
+    public int getAdjustedHorizontalLimit() {
+        return (int) (horizontalLimit * horizontalDrawScale);
+    }
+
+    @Override
+    public int getAdjustedVerticalLimit() {
+        return (int) (verticalLimit * verticalDrawScale);
     }
 
     @Override
@@ -159,25 +170,6 @@ public class ServerGameManager implements ContractServerPlay.Model {
             racketPojosToDraw.add(racketModel.getRacketPojoToDraw());
         }
         return racketPojosToDraw;
-    }
-
-    @Override
-    public void racketsMovement(int keyCode) {
-        System.out.println(KeyEvent.getKeyText(keyCode));
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                racketsModel.get(0).move(DirectionEnum.UP);
-                break;
-            case KeyEvent.VK_S:
-                racketsModel.get(0).move(DirectionEnum.DOWN);
-                break;
-            case KeyEvent.VK_UP:
-                racketsModel.get(1).move(DirectionEnum.UP);
-                break;
-            case KeyEvent.VK_DOWN:
-                racketsModel.get(1).move(DirectionEnum.DOWN);
-                break;
-        }
     }
 
     @Override

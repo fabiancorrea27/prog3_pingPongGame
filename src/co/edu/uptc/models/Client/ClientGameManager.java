@@ -50,7 +50,6 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     private void initRacket() {
         racketModel = new ClientRacketModel();
-        int windowHeight = Integer.parseInt(PropertiesReader.getProperty("windowHeight"));
         racketModel.setVerticalLimit(verticalLimit);
         racketModel.setHorizontalLimit(horizontalLimit);
         chooseRacketPosition();
@@ -67,7 +66,7 @@ public class ClientGameManager implements ContractClientPlay.Model {
         }
     }
 
-    private void initLimits(){
+    private void initLimits() {
         horizontalLimit = Integer.parseInt(PropertiesReader.getProperty("windowWidth")) - 16;
         verticalLimit = Integer.parseInt(PropertiesReader.getProperty("windowHeight")) - 40;
     }
@@ -89,27 +88,14 @@ public class ClientGameManager implements ContractClientPlay.Model {
 
     @Override
     public void racketMovement(int keyCode) {
-        System.out.println(KeyEvent.getKeyText(keyCode));
-        if ((racketModel.getRacketPojo().getPosition() != null)
-                && (racketModel.getRacketPojo().getPosition() == DirectionEnum.LEFT)) {
-            moveLeftRacket(keyCode);
-        } else {
-            moveRightRacket(keyCode);
+        if (racketModel.getRacketPojo().isAvailable()
+                && (racketModel.getRacketPojo().getPosition() == DirectionEnum.LEFT
+                        || racketModel.getRacketPojo().getPosition() == DirectionEnum.RIGHT)) {
+            moveRacket(keyCode);
         }
     }
 
-    private void moveLeftRacket(int keyCode) {
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                racketModel.move(DirectionEnum.UP);
-                break;
-            case KeyEvent.VK_S:
-                racketModel.move(DirectionEnum.DOWN);
-                break;
-        }
-    }
-
-    private void moveRightRacket(int keyCode) {
+    private void moveRacket(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
                 racketModel.move(DirectionEnum.UP);

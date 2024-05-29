@@ -8,13 +8,12 @@ public class ClientRacketModel {
     private int verticalLimit;
     private int horizontalLimit;
     private int movementSpeed;
-    private int boardPosition;
 
     public ClientRacketModel() {
         racketPojo = new RacketPojo();
         racketPojo.setHeight(60);
         racketPojo.setWidth(20);
-
+        movementSpeed = 10;
     }
 
     public void configureInitialPosition() {
@@ -39,7 +38,7 @@ public class ClientRacketModel {
     }
 
     private void moveUp() {
-        if (racketPojo.getyCoordinate() >= 0) {
+        if (racketPojo.getyCoordinate() > movementSpeed) {
             racketPojo.setyCoordinate(racketPojo.getyCoordinate() - movementSpeed);
         } else {
             racketPojo.setyCoordinate(0);
@@ -47,7 +46,7 @@ public class ClientRacketModel {
     }
 
     private void moveDown() {
-        if ((racketPojo.getyCoordinate() + racketPojo.getHeight()) <= (verticalLimit)) {
+        if ((racketPojo.getyCoordinate() + racketPojo.getHeight()) <= (verticalLimit - movementSpeed)) {
             racketPojo.setyCoordinate(racketPojo.getyCoordinate() + movementSpeed);
         } else {
             racketPojo.setyCoordinate(verticalLimit - racketPojo.getHeight());

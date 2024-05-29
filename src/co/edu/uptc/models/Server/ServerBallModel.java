@@ -77,7 +77,7 @@ public class ServerBallModel {
         copyValuesToBallPojoToDraw();
         ballPojoToDraw.setxCoordinate((int) (horizontalDrawScale * ballPojo.getxCoordinate()));
         ballPojoToDraw.setyCoordinate((int) (verticalDrawScale * ballPojo.getyCoordinate()));
-        ballPojoToDraw.setSize((int) (horizontalDrawScale * ballPojo.getSize()));
+        ballPojoToDraw.setSize((int) (verticalDrawScale * ballPojo.getSize()));
     }
 
     private void copyValuesToBallPojoToDraw(){

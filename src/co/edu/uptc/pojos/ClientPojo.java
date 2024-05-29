@@ -6,7 +6,6 @@ public class ClientPojo implements Serializable {
 
     private String ipAddress;
     private int clientsAmount;
-    private boolean isPlayer;
     private RacketPojo racketPojo;
     private BallPojo ballPojo;
     private int boardPosition;
@@ -18,14 +17,6 @@ public class ClientPojo implements Serializable {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
-    }
-
-    public boolean isPlayer() {
-        return isPlayer;
-    }
-
-    public void setPlayer(boolean isPlayer) {
-        this.isPlayer = isPlayer;
     }
 
     public int getClientsAmount() {
@@ -70,9 +61,8 @@ public class ClientPojo implements Serializable {
 
     @Override
     public String toString() {
-        return "ClientPojo [ipAddress=" + ipAddress + ", clientsAmount=" + clientsAmount + ", isPlayer=" + isPlayer
-                + ", racketPojo=" + racketPojo + ", ballPojo=" + ballPojo + ", boardPosition=" + boardPosition
-                + ", isStarted=" + isStarted + "]";
-    }   
+        return "ClientPojo [ipAddress=" + ipAddress + ", clientsAmount=" + clientsAmount + ", racketPojo=" + racketPojo
+                + ", ballPojo=" + ballPojo + ", boardPosition=" + boardPosition + ", isStarted=" + isStarted + "]";
+    }
 
 }

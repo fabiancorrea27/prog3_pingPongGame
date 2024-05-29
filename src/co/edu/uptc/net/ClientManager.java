@@ -35,9 +35,6 @@ public class ClientManager {
                         // Receive client pojo with ball pojo updated
                         ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
                         clientPojo = (ClientPojo) input.readObject();
-                        if (clientPojo.getRacketPojo() != null) {
-                            clientPojo.getRacketPojo().setAvailable(clientPojo.isPlayer());
-                        }
                         clientsAmount = clientPojo.getClientsAmount();
                         // Send client pojo with racket pojo updated
                         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());

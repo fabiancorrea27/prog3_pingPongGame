@@ -2,11 +2,11 @@ package co.edu.uptc.models.Server;
 
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.utils.DirectionEnum;
+import co.edu.uptc.utils.PropertiesReader;
 
 public class ServerRacketModel {
     private RacketPojo racketPojo;
     private RacketPojo racketPojoToDraw;
-    private int movementSpeed;
     private int verticalLimit;
     private int horizontalLimit;
     private double horizontalDrawScale;
@@ -17,32 +17,6 @@ public class ServerRacketModel {
         racketPojo.setHeight(60);
         racketPojo.setWidth(20);
         racketPojoToDraw = new RacketPojo();
-        movementSpeed = 10;
-    }
-
-    public void move(DirectionEnum movementDirection) {
-        if (movementDirection == DirectionEnum.UP) {
-            moveUp();
-        } else if (movementDirection == DirectionEnum.DOWN) {
-            moveDown();
-        }
-        calculateRacketDrawScale();
-    }
-
-    private void moveUp() {
-        if (racketPojo.getyCoordinate() >= 0) {
-            racketPojo.setyCoordinate(racketPojo.getyCoordinate() - movementSpeed);
-        } else {
-            racketPojo.setyCoordinate(0);
-        }
-    }
-
-    private void moveDown() {
-        if ((racketPojo.getyCoordinate() + racketPojo.getHeight()) <= (verticalLimit)) {
-            racketPojo.setyCoordinate(racketPojo.getyCoordinate() + movementSpeed);
-        } else {
-            racketPojo.setyCoordinate(verticalLimit - racketPojo.getHeight());
-        }
     }
 
     public void calculateRacketDrawScale() {
@@ -83,10 +57,6 @@ public class ServerRacketModel {
 
     public RacketPojo getRacketPojo() {
         return racketPojo;
-    }
-
-    public void setMovementSpeed(int movementSpeed) {
-        this.movementSpeed = movementSpeed;
     }
 
     public void setVerticalLimit(int verticalLimit) {

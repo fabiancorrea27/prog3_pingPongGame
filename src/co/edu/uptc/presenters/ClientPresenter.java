@@ -51,7 +51,7 @@ public class ClientPresenter implements ContractClientPlay.Presenter {
     }
 
     @Override
-    public void racketsMovement(int keyCode) {
+    public void racketMovement(int keyCode) {
         model.racketMovement(keyCode);
     }
 

@@ -13,8 +13,9 @@ public interface ContractServerPlay {
         public void startGame();
         public BallPojo getBallPojoToDraw();
         public List<RacketPojo> getRacketsPojoToDraw();
-        public void racketsMovement(int keyCode);
         public boolean checkMinClientsAmount();
+        public int getAdjustedHorizontalLimit();
+        public int getAdjustedVerticalLimit();
     }
 
     public interface View {
@@ -40,5 +41,7 @@ public interface ContractServerPlay {
         public BallPojo getBallPojoToDraw();
         public List<RacketPojo> getRacketsPojoToDraw();
         public boolean checkMinClientsAmount();
+        public int getAdjustedHorizontalLimit();
+        public int getAdjustedVerticalLimit();
     }
 }

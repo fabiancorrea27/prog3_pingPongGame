@@ -19,11 +19,14 @@ public class ServerGamePanel extends JPanel {
     public ServerGamePanel(ServerGameFrame dashboard) {
         this.gameFrame = dashboard;
     }
-   
+
     // }
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        int boardWidth = gameFrame.getPresenter().getAdjustedHorizontalLimit();
+        int boardHeight = gameFrame.getPresenter().getAdjustedVerticalLimit();
+        g.drawLine(0, boardHeight / 2, boardWidth, boardHeight / 2);
         if (ball != null) {
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
