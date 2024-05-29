@@ -3,3 +3,6 @@
 
 # Ignore bin carpet
 bin/
+
+# Ignoere jar files
+*.jar

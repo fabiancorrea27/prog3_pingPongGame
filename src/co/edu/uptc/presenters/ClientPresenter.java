@@ -38,8 +38,6 @@ public class ClientPresenter implements ContractClientPlay.Presenter {
         setModel(gameManager);
     }
 
-  
-
     @Override
     public BallPojo getBallPojoToDraw() {
         return model.getBallPojoToDraw();
@@ -69,5 +67,4 @@ public class ClientPresenter implements ContractClientPlay.Presenter {
     public void changeClientsAmount(int clientsAmount) {
        view.changeClientsAmount(clientsAmount);
     }
-
 }

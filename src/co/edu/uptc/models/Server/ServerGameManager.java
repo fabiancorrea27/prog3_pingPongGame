@@ -1,5 +1,6 @@
 package co.edu.uptc.models.Server;
 
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +68,7 @@ public class ServerGameManager implements ContractServerPlay.Model {
         server.beginEvents();
         sendAndReceiveInformationFromClient();
         ballModel.startMovement();
+        checkBallAndRacketsCollision();
     }
 
     private void initModels() {
@@ -108,6 +110,10 @@ public class ServerGameManager implements ContractServerPlay.Model {
             @Override
             public void run() {
                 while (true) {
+                    Util.sleep(100);
+                    System.out.println(
+                            "Server: " + "X: " + (ballModel.getBallPojo().getxCoordinate() - (horizontalLimit / 2))
+                                    + " Y: " + (ballModel.getBallPojo().getyCoordinate()));
                     server.setBallPojo(ballModel.getBallPojo());
                     server.sendClientsPackage();
                     for (int i = 0; i < server.getClients().size(); i++) {
@@ -132,6 +138,37 @@ public class ServerGameManager implements ContractServerPlay.Model {
             clientPojo.getRacketPojo()
                     .setxCoordinate(clientPojo.getRacketPojo().getxCoordinate()
                             * server.getClients().size());
+        }
+    }
+
+    private void checkBallAndRacketsCollision() {
+        Thread checkBallAndRacketsCollisionThread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                while (true) {
+                    for (ServerRacketModel racketModel : racketsModel) {
+                        checkBallAndRacketCollision(racketModel.getRacketPojo());
+                    }
+                    Util.sleep(40);
+                }
+            }
+
+        });
+        checkBallAndRacketsCollisionThread.setName("Check Collision Thread");
+        checkBallAndRacketsCollisionThread.start();
+
+    }
+
+    private void checkBallAndRacketCollision(RacketPojo racketPojo) {
+        BallPojo ball = ballModel.getBallPojo();
+        Rectangle ballRectangle = new Rectangle(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(),
+                ball.getSize());
+        Rectangle racketRectangle = new Rectangle(racketPojo.getxCoordinate(), racketPojo.getyCoordinate(),
+                racketPojo.getWidth(), racketPojo.getHeight());
+
+        if (ballRectangle.intersects(racketRectangle)) {
+            ballModel.horizontalReflection();
         }
     }
 

@@ -79,5 +79,4 @@ public class ServerPresenter implements ContractServerPlay.Presenter {
     public int getAdjustedVerticalLimit() {
         return model.getAdjustedVerticalLimit();
     }
-
 }

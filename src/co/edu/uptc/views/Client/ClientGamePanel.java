@@ -18,8 +18,7 @@ public class ClientGamePanel extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        if (ball != null) {
-            
+        if (ball != null) {        
             g.fillOval(ball.getxCoordinate(), ball.getyCoordinate(), ball.getSize(), ball.getSize());
         }
         if (racket != null) {

@@ -31,16 +31,16 @@ public class ClientManager {
                     ServerSocket serverSocket = new ServerSocket(9002);
                     while (true) {
                         Socket socket = serverSocket.accept();
-
-                        // Receive client pojo with ball pojo updated
-                        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-                        clientPojo = (ClientPojo) input.readObject();
-                        clientsAmount = clientPojo.getClientsAmount();
                         // Send client pojo with racket pojo updated
                         ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
                         clientPojo.setRacketPojo(racketPojo);
                         output.writeObject(clientPojo);
                         socket.close();
+
+                        // Receive client pojo with ball pojo updated
+                        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
+                        clientPojo = (ClientPojo) input.readObject();
+                        clientsAmount = clientPojo.getClientsAmount();
                     }
                 } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();

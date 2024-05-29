@@ -19,6 +19,7 @@ public class ServerDashboard extends JFrame implements ContractServerPlay.View {
         this.setSize(600, 300);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setTitle("Esperando jugadores");
         gameFrame.setDashboard(this);
         this.add(waitingPanel);
     }

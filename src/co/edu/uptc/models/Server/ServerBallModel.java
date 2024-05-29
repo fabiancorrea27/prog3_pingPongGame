@@ -66,7 +66,6 @@ public class ServerBallModel {
 
     private void checkCollisionRight() {
         if ((ballPojo.getxCoordinate() + ballPojo.getSize()) > (horizontalLimit - movementSpeed)) {
-            System.out.println(ballPojo.getxCoordinate() + " horizonal limit: " + horizontalLimit);
             ballPojo.setxCoordinate(horizontalLimit - ballPojo.getSize());
             configurePosition();
             chooseRandomAngle();
@@ -74,7 +73,7 @@ public class ServerBallModel {
     }
 
     private void checkCollisionLeft() {
-        if (ballPojo.getxCoordinate() <= 0) {
+        if (ballPojo.getxCoordinate() < movementSpeed) {
             ballPojo.setxCoordinate(0);
             configurePosition();
             chooseRandomAngle();
@@ -98,6 +97,14 @@ public class ServerBallModel {
     public void configurePosition() {
         ballPojo.setxCoordinate(horizontalLimit / 2 - ballPojo.getSize() / 2);
         ballPojo.setyCoordinate(verticalLimit / 2 - ballPojo.getSize() / 2);
+    }
+
+    public void horizontalReflection() {
+        if (angle > 6.2 && angle < 6.3) {
+            angle = -0.78;
+        } else {
+            angle = Math.PI - angle;
+        }
     }
 
     public BallPojo getBallPojo() {

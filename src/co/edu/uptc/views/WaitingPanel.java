@@ -25,6 +25,7 @@ public class WaitingPanel extends JPanel {
     public WaitingPanel(ActionListener actionListener, RoleEnum role) {
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
+        
         this.role = role;
         initComponents(actionListener);
         addComponents();
