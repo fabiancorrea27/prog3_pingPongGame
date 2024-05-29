@@ -1,6 +1,7 @@
 package co.edu.uptc.models.Server;
 
 import co.edu.uptc.pojos.BallPojo;
+import co.edu.uptc.utils.PropertiesReader;
 import co.edu.uptc.utils.Util;
 
 public class ServerBallModel {
@@ -16,8 +17,9 @@ public class ServerBallModel {
 
     public ServerBallModel() {
         ballPojo = new BallPojo();
-        movementSpeed = 5;
-        ballPojo.setSize(20);
+        movementSpeed = Integer.parseInt(PropertiesReader.getProperty("ballSpeed"));
+        int ballSize = Integer.parseInt(PropertiesReader.getProperty("ballSize"));
+        ballPojo.setSize(ballSize);
         ballPojoToDraw = new BallPojo();
         chooseRandomAngle();
     }

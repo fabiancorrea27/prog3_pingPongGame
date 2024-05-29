@@ -12,7 +12,8 @@ public class ClientBallModel {
 
     public ClientBallModel() {
         ballPojo = new BallPojo();
-        ballPojo.setSize(20);
+        int ballSize = Integer.parseInt(PropertiesReader.getProperty("ballSize"));
+        ballPojo.setSize(ballSize);
         ballPojoToDraw = new BallPojo();
         ballPojo.setSize(ballPojo.getSize());
     }

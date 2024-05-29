@@ -21,8 +21,11 @@
  - Para iniciar el juego, se deberá que contar con mínimo dos jugadores, ya con esto, en la máquina del servidor, se da clic al botón de 'Iniciar'.
  
 ## Información adicional
-- Se puede cambiar el tamaño de las ventanas en el archivo properties.
+- Se puede cambiar distintas características en el archivo properties:
+    - tamaño de la bola, raquetas y ventanas.
+    - velocidad de la bola y raquetas.
 - Los botones para mover las raquetas son las flechas de arriba y abajo.
+
 
 ## Autor
 - Fabian Leonardo Correa Rojas

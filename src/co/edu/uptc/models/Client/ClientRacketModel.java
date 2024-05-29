@@ -2,6 +2,7 @@ package co.edu.uptc.models.Client;
 
 import co.edu.uptc.pojos.RacketPojo;
 import co.edu.uptc.utils.DirectionEnum;
+import co.edu.uptc.utils.PropertiesReader;
 
 public class ClientRacketModel {
     private RacketPojo racketPojo;
@@ -11,9 +12,11 @@ public class ClientRacketModel {
 
     public ClientRacketModel() {
         racketPojo = new RacketPojo();
-        racketPojo.setHeight(60);
-        racketPojo.setWidth(20);
-        movementSpeed = 10;
+        int racketHeight = Integer.parseInt(PropertiesReader.getProperty("racketHeight"));
+        int racketWidth = Integer.parseInt(PropertiesReader.getProperty("racketWidth"));
+        racketPojo.setWidth(racketWidth);
+        racketPojo.setHeight(racketHeight);
+        movementSpeed = Integer.parseInt(PropertiesReader.getProperty("racketSpeed"));
     }
 
     public void configureInitialPosition() {
